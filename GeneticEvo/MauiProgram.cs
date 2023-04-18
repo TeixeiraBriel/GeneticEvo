@@ -3,7 +3,7 @@ using IoC;
 using Microsoft.Extensions.Logging;
 
 namespace GeneticEvo;
-
+//DEV
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
