@@ -1,7 +1,7 @@
 ﻿using GeneticEvo.Entidades;
 using IoC;
 using Microsoft.Extensions.Logging;
-
+//HOM
 namespace GeneticEvo;
 
 public static class MauiProgram
