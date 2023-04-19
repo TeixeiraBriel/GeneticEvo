@@ -32,7 +32,7 @@ public partial class NovoIndividuoPage : ContentPage
         }
         else
         {
-            DisplayAlert("Sucesso", "Seus dados foram enviados!", "ok");
+            DisplayAlert("Sucesso", "Seus dados foram enviados!", "okay");
         }
     }
 }
