@@ -3,12 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GeneticEvo.NovoIndividuoPage"
              Title="NovoIndividuoPage">
-    <VerticalStackLayout>
-        <Label 
+
+    <ScrollView>
+        
+        <VerticalStackLayout
+            Spacing="10"
+            Padding="30,0">
+            <Label 
             Text="Novo Individuo"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        
-        
-    </VerticalStackLayout>
+
+            <StackLayout 
+                HorizontalOptions="Center">
+                <Label Text="Nome:"/>
+                <Entry x:Name="inputNome"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Especie:"/>
+                <Entry x:Name="inputEspecie"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Filiação:"/>
+                <Entry x:Name="inputFiliacao"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Vida:"/>
+                <Entry x:Name="inputVida"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Fome:"/>
+                <Entry x:Name="inputFome"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Energia:"/>
+                <Entry x:Name="inputEnergia"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Tempo de Vida:"/>
+                <Entry x:Name="inputTempoVida"
+               WidthRequest="300"
+               HorizontalOptions="Start"/>
+
+                <Label Text="Origem:"/>
+                <Entry x:Name="inputOrigem"
+                   WidthRequest="300"
+                   HorizontalOptions="Start"/>
+
+                <Button Text="Confirmar" Clicked="Button_Confirmar"/>
+            </StackLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
