@@ -5,7 +5,7 @@
              Title="NovoIndividuoPage">
 
     <ScrollView>
-        
+        <HorizontalStackLayout>
         <VerticalStackLayout
             Spacing="30"
             Padding="30,0" 
@@ -15,57 +15,103 @@
             <Label 
             Text="Novo Individuo"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="25"/>
 
             <StackLayout 
                 Spacing="20"
-                HorizontalOptions="Center">
+                HorizontalOptions="Start">
+                
                 <Label Text="Nome:"/>
                 <Entry x:Name="inputNome"
+               BackgroundColor="Azure"
                WidthRequest="300"
                HorizontalOptions="Start"
-               Placeholder="name..."/>
+               Placeholder="digite um nome"
+               class="entry_cls"/>
 
 
                 <Label Text="Especie:"/>
                 <Entry x:Name="inputEspecie"
+               BackgroundColor="Azure"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Placeholder="digite uma espécie"/>
+
 
                 <Label Text="Filiação:"/>
                 <Entry x:Name="inputFiliacao"
+               BackgroundColor="Azure"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Placeholder="digite uma filiação"/>
+
 
                 <Label Text="Vida:"/>
                 <Entry x:Name="inputVida"
+               BackgroundColor="Azure"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Placeholder="digite a quantidade de vida"/>
+
 
                 <Label Text="Fome:"/>
                 <Entry x:Name="inputFome"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               BackgroundColor="Azure"
+               HorizontalOptions="Start"
+               Placeholder="digite a quantidade de fome"/>
 
                 <Label Text="Energia:"/>
                 <Entry x:Name="inputEnergia"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               BackgroundColor="Azure"
+
+               Placeholder="digite a quantidade de energia"/>
+
 
                 <Label Text="Tempo de Vida:"/>
                 <Entry x:Name="inputTempoVida"
                WidthRequest="300"
                HorizontalOptions="Start"
-               Placeholder="100"/>
+               BackgroundColor="Azure"
+
+               Placeholder="digite o tempo de vida do indivíduo"/>
 
                 <Label Text="Origem:"/>
                 <Entry x:Name="inputOrigem"
                    WidthRequest="300"
-                   HorizontalOptions="Start"/>
+                   BackgroundColor="Azure"
+                   HorizontalOptions="Start"
+                   Placeholder="digite a orgiem "/>
 
-                <Button Text="Confirmar" Clicked="Button_Confirmar"/>
+
+                <Button Text="Confirmar" Clicked="Button_Confirmar" BorderColor="Azure" />
             </StackLayout>
             
+   
+     
         </VerticalStackLayout>
+            <StackLayout
+                 MinimumWidthRequest="500">
+                
+            <Label Text="TESTE TESTE TESTE:"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                />
+
+                <Image 
+                Source="arvirizinha.png"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+
+            </StackLayout>
+
+
+
+        </HorizontalStackLayout>
+        
     </ScrollView>
 </ContentPage>

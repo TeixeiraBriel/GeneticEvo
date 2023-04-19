@@ -1,4 +1,5 @@
-﻿using GeneticEvo.Controladores;
+﻿using Android.Content;
+using GeneticEvo.Controladores;
 using GeneticEvo.Entidades;
 using GeneticEvo.Helpers;
 
@@ -22,7 +23,10 @@ public partial class MainPage : ContentPage
         lblTitulo.Text = $"Ano: {_controlador.mundo.Geracao} com {_controlador.mundo.EspecieList.Count} Individuos";
         CriarListIndividuos();
     }
-
+    private async void OnLoad(object sender, EventArgs e)
+    {
+        await immIntro.RotateTo(immIntro.Rotation + 90, 1000, Easing.Linear);
+    }
     private void OnCounterClicked(object sender, EventArgs e)
     {
         _controlador.avancaGeracao();

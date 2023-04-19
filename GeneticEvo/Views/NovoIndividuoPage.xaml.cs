@@ -1,5 +1,7 @@
 using GeneticEvo.Entidades;
 using GeneticEvo.Helpers;
+using GeneticEvo.Controladores;
+
 
 namespace GeneticEvo;
 
@@ -11,6 +13,7 @@ public partial class NovoIndividuoPage : ContentPage
 
     public NovoIndividuoPage()
     {
+
 		InitializeComponent();
         mundo = ServiceHelper.GetService<Mundo>();
         listaCaracteristicas = new ListaCaracteristicas();

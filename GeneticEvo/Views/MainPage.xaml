@@ -6,15 +6,29 @@
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
-            Padding="30,0"
+            Padding="30,30"
             VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+            <Label
+            Text="Welcome to GeneticEvo"
+            TextColor="Aqua"
+            FontSize="32"
+            SemanticProperties.HeadingLevel="Level2"
+            HorizontalOptions="Center"
             
+            />
+
+
+
+            <Image
+                Source="img_intro.png"
+                x:Name="immIntro"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="250"
+                ZIndex="0"
+                Opacity="0.5"
+                HorizontalOptions="Center" />
+
             <Label
                 x:Name="lblTitulo"
                 Text=""
@@ -41,7 +55,7 @@
                 Text="Especie"
                 Clicked="OnEspecieClicked"
                 HorizontalOptions="Center"
-                    Margin="5,0,5,0"/>
+                Margin="5,0,5,0"/>
             </HorizontalStackLayout>
 
             <VerticalStackLayout
