@@ -7,19 +7,25 @@
     <ScrollView>
         
         <VerticalStackLayout
-            Spacing="10"
-            Padding="30,0">
+            Spacing="30"
+            Padding="30,0" 
+            Margin="20"
+            VerticalOptions="Center">
+            
             <Label 
             Text="Novo Individuo"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
             <StackLayout 
+                Spacing="20"
                 HorizontalOptions="Center">
                 <Label Text="Nome:"/>
                 <Entry x:Name="inputNome"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Placeholder="name..."/>
+
 
                 <Label Text="Especie:"/>
                 <Entry x:Name="inputEspecie"
@@ -49,7 +55,8 @@
                 <Label Text="Tempo de Vida:"/>
                 <Entry x:Name="inputTempoVida"
                WidthRequest="300"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Placeholder="100"/>
 
                 <Label Text="Origem:"/>
                 <Entry x:Name="inputOrigem"
