@@ -2,8 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GeneticEvo.MainPage">
+    
 
     <ScrollView>
+
+
+      
+
+
         <VerticalStackLayout
             Spacing="25"
             Padding="30,30"
@@ -17,17 +23,49 @@
             HorizontalOptions="Center"
             
             />
+            
+          
+            
+            <FlexLayout  Direction="Row" JustifyContent="SpaceAround">
 
-
-
-            <Image
+                    <StackLayout>
+                        <Image
                 Source="img_intro.png"
                 x:Name="immIntro"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="250"
                 ZIndex="0"
                 Opacity="0.5"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Start" />
+                    </StackLayout>
+
+                    <StackLayout
+                    Spacing="30">
+                        <Button
+                x:Name="CounterBtn"
+                Text="Avançar Ano"
+                Clicked="OnCounterClicked"
+                MinimumWidthRequest="60"/>
+
+                        <Button
+                x:Name="TodosBtn"
+                Text="Todos"
+                Clicked="OnTodosClicked"
+                Margin="5,0,5,0"
+                MinimumWidthRequest="60"/>
+
+                        <Button
+                x:Name="EspecieBtn"
+                Text="Especie"
+                Clicked="OnEspecieClicked"
+                Margin="5,0,5,0"
+                MinimumWidthRequest="60"
+                            TranslationY="50"/>
+
+                    </StackLayout>
+            </FlexLayout>
+            
+            
 
             <Label
                 x:Name="lblTitulo"
@@ -36,27 +74,7 @@
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Button
-                x:Name="CounterBtn"
-                Text="Avançar Ano"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-                <Button
-                x:Name="TodosBtn"
-                Text="Todos"
-                Clicked="OnTodosClicked"
-                HorizontalOptions="Center"
-                    Margin="5,0,5,0"/>
-
-                <Button
-                x:Name="EspecieBtn"
-                Text="Especie"
-                Clicked="OnEspecieClicked"
-                HorizontalOptions="Center"
-                Margin="5,0,5,0"/>
-            </HorizontalStackLayout>
+           
 
             <VerticalStackLayout
                 x:Name="StackVertical"
