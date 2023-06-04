@@ -7,20 +7,21 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Start" >
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-            
-            <Label
-                x:Name="lblTitulo"
+            <StackLayout>
+                <Label
+                x:Name="lblAno"
                 Text=""
-                SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
-                HorizontalOptions="Center" />
+                HorizontalOptions="CenterAndExpand" />
+
+                <Label
+                x:Name="lblIndividuos"
+                Text=""
+                FontSize="32"
+                HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
 
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Button
@@ -28,27 +29,13 @@
                 Text="Reiniciar"
                 Clicked="OnReiniciarClicked"
                 HorizontalOptions="Center" />
-                
+
                 <Button
                 x:Name="CounterBtn"
                 Text="Avançar Ano"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center"
                 Margin="5,0,5,0"/>
-
-                <Button
-                x:Name="TodosBtn"
-                Text="Todos"
-                Clicked="OnTodosClicked"
-                HorizontalOptions="Center"
-                    Margin="5,0,5,0"/>
-
-                <Button
-                x:Name="EspecieBtn"
-                Text="Especie"
-                Clicked="OnEspecieClicked"
-                HorizontalOptions="Center"
-                    Margin="5,0,5,0"/>
             </HorizontalStackLayout>
 
             <VerticalStackLayout

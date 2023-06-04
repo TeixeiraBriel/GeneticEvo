@@ -195,7 +195,7 @@ namespace GeneticEvo.Entidades
             var rand = new Random().Next(1, 5);
             double validador = rand * ChaceMutacao;
 
-            if (validador > 0.7)
+            if (validador > 0.1)
             {
                 return true;
             }

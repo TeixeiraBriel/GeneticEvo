@@ -2,6 +2,7 @@
 using GeneticEvo.Entidades.Caracteristicas;
 using GeneticEvo.Enumeradores;
 using GeneticEvo.Helpers;
+using System.Collections.Generic;
 
 namespace GeneticEvo.Controladores
 {
@@ -16,7 +17,10 @@ namespace GeneticEvo.Controladores
 
         public void iniciaMundo()
         {
-            mundo = new Mundo();
+            mundo.EspecieList = new List<Individuo>();
+            mundo.Geracao = 1;
+            mundo.registroEspecies = new List<RegistroEspecie>();
+
             iniciaAlgaBase();
             iniciaPredadorBase();
         }
@@ -63,7 +67,6 @@ namespace GeneticEvo.Controladores
 
         public void avancaGeracao()
         {
-            //mundo.EspecieList.RemoveAll(x => x.Especie == "Alga");
             var especies = mundo.registroEspecies;
             List<Individuo> EspecieListAtual = atribuiLista(mundo.EspecieList);
 

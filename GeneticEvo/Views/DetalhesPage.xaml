@@ -5,33 +5,33 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            Padding="5"
+            Spacing="15"
+            VerticalOptions="Start">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+            <HorizontalStackLayout 
+                Padding="5"
+                Spacing="5"
+                HorizontalOptions="CenterAndExpand">
+                <Button Text="Ant." Clicked="EspecieAnt"/>
+                <Button Text="Prox." Clicked="EspecieProx"/>
+            </HorizontalStackLayout>
 
             <Label
-                x:Name="lblTitulo"
-                Text="DetalhesPage"
-                SemanticProperties.HeadingLevel="Level1"
+                x:Name="lblNomeEspecie"
+                Text="Teste"
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Avançar Geração"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <VerticalStackLayout
-                x:Name="StackVertical"
-                HorizontalOptions="Center" />
-
+            <VerticalStackLayout 
+                Padding="15"
+                BackgroundColor="LightGrey">
+                <Label Text="Caracteristicas:"/>
+                <VerticalStackLayout 
+                    Spacing="5"
+                    x:Name="PanelCaracteristicas">
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 

@@ -6,11 +6,8 @@ namespace GeneticEvo;
 
 public partial class MainPage : ContentPage
 {
-    public bool Inicializado = false;
-    int count = 0;
     Controlador _controlador;
     List<Tuple<string, int>> filtroEspecie;
-    bool FiltrarPorEspecie = false;
 
     public MainPage()
     {
@@ -19,20 +16,13 @@ public partial class MainPage : ContentPage
         _controlador = new Controlador();
         _controlador.iniciaMundo();
 
-        lblTitulo.Text = $"Ano: {_controlador.mundo.Geracao} com {_controlador.mundo.EspecieList.Count} Individuos";
-        CriarListIndividuos();
-
-        ListView listView = new ListView();
-        listView.SetBinding(ItemsView.ItemsSourceProperty, "Monkeys");
+        atualizaDadosTela();
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
+    void atualizaDadosTela()
     {
-        _controlador.avancaGeracao();
-
-        lblTitulo.Text = $"Ano: {_controlador.mundo.Geracao} com {_controlador.mundo.EspecieList.Count} Individuos";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        lblAno.Text = $"Ano: {_controlador.mundo.Geracao}";
+        lblIndividuos.Text = $"{_controlador.mundo.EspecieList.Count} Individuos";
         CriarListIndividuos();
     }
 
@@ -45,64 +35,43 @@ public partial class MainPage : ContentPage
 
         foreach (Individuo individo in Individuos)
         {
-            if (FiltrarPorEspecie)
+            var reg = filtroEspecie.Find(x => x.Item1 == individo.Especie);
+            if (reg == null)
             {
-                var reg = filtroEspecie.Find(x => x.Item1 == individo.Especie);
-                if (reg == null)
-                {
-                    filtroEspecie.Add(new Tuple<string, int>(individo.Especie, 1));
-                }
-                else
-                {
-                    filtroEspecie.Add(new Tuple<string, int>(reg.Item1, reg.Item2 + 1));
-                    filtroEspecie.Remove(reg);
-                }
+                filtroEspecie.Add(new Tuple<string, int>(individo.Especie, 1));
             }
             else
             {
-                StackVertical.Add(new Label()
-                {
-                    Text =
-                    $"Nome:{individo.Nome}    " +
-                    $"Especie:{individo.Especie}    " +
-                    $"Filiacao:{individo.Filiacao}    " +
-                    $"Vida:{individo.Vida}   " +
-                    $"Energia:{individo.Energia}   " +
-                    $"TempoVida:{individo.TempoVida}   " +
-                    $"Origem:{individo.DataOrigem}"
-                });
+                filtroEspecie.Add(new Tuple<string, int>(reg.Item1, reg.Item2 + 1));
+                filtroEspecie.Remove(reg);
             }
         }
 
-        if (FiltrarPorEspecie)
+        foreach (var especie in filtroEspecie)
         {
-            foreach (var especie in filtroEspecie)
+            StackVertical.Add(new Label()
             {
-                StackVertical.Add(new Label()
-                {
-                    Text = $"Especie: {especie.Item1}   Quantidade: {especie.Item2}"
-                });
+                Text = $"Especie: {especie.Item1}   Quantidade: {especie.Item2}"
+            });
 
-            }
         }
-    }
-
-    private void OnTodosClicked(object sender, EventArgs e)
-    {
-        FiltrarPorEspecie = false;
-        CriarListIndividuos();
     }
 
     private void OnEspecieClicked(object sender, EventArgs e)
     {
-        FiltrarPorEspecie = true;
-        CriarListIndividuos();
+        atualizaDadosTela();
+    }
+
+    private void OnCounterClicked(object sender, EventArgs e)
+    {
+        _controlador.avancaGeracao();
+        atualizaDadosTela();
     }
 
     private void OnReiniciarClicked(object sender, EventArgs e)
     {
         _controlador.iniciaMundo();
-        CriarListIndividuos();
+        atualizaDadosTela();
     }
 }
 
