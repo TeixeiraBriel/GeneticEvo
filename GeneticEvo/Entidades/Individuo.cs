@@ -1,11 +1,12 @@
 ﻿using GeneticEvo.Entidades.Caracteristicas;
+using GeneticEvo.Enumeradores;
 using GeneticEvo.Helpers;
-using Microsoft.Maui.Controls.Compatibility.Platform.UWP;
 using Microsoft.Maui.Controls.Platform;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,24 +26,32 @@ namespace GeneticEvo.Entidades
         public double Energia { get; set; }
         public double ChaceMutacao { get; set; }
         public int TempoVida { get; set; }
+        public bool Vivo { get; set; }
 
         public Individuo()
         {
-            ChaceMutacao = 0.002;
+            ChaceMutacao = 0.02;
+            Vivo = true;
         }
 
         public List<Caracteristica> Caracteristicas { get; set; }
 
         public Mundo ExecutaCaracteristicas(Mundo mundo)
         {
-            for (int i = 0; i < 10; i++)
+            if (Vivo)
             {
-                List<Caracteristica> _caracteristicasAtual = Caracteristicas.FindAll(x => x.Prioridade == i);
-                foreach (Caracteristica caracteristicas in _caracteristicasAtual)
+                for (int i = 10; i > 0; i--)
                 {
-                    mundo = caracteristicas.Executa(this, mundo);
+                    List<Caracteristica> _caracteristicasAtual = Caracteristicas.FindAll(x => x.Prioridade == i && x.Executar);
+                    foreach (Caracteristica caracteristicas in _caracteristicasAtual)
+                    {
+                        mundo = caracteristicas.Executa(this, mundo);
+                    }
                 }
             }
+
+            if (Vida <= 0 && Vivo)
+                definirComoMorto();
 
             TempoVida--;
             if (TempoVida <= 0 && mundo.EspecieList.FirstOrDefault(x => x == this) != null)
@@ -60,14 +69,23 @@ namespace GeneticEvo.Entidades
             string dadosAntiga = JsonConvert.SerializeObject(caracteristica);
             switch (novaCaracteristica.Nome)
             {
-                case "Fotossintese":
+                case EnumCaracteristicas.Fotossintese:
                     novaCaracteristica = JsonConvert.DeserializeObject<Fotossintese>(dadosAntiga);
                     break;
-                case "Digestao":
+                case EnumCaracteristicas.Digestao:
                     novaCaracteristica = JsonConvert.DeserializeObject<Digestao>(dadosAntiga);
                     break;
-                case "Meiose":
+                case EnumCaracteristicas.Meiose:
                     novaCaracteristica = JsonConvert.DeserializeObject<Meiose>(dadosAntiga);
+                    break;
+                case EnumCaracteristicas.Morder:
+                    novaCaracteristica = JsonConvert.DeserializeObject<Morder>(dadosAntiga);
+                    break;
+                case EnumCaracteristicas.Estomago:
+                    novaCaracteristica = JsonConvert.DeserializeObject<Estomago>(dadosAntiga);
+                    break;
+                case EnumCaracteristicas.Regeneracao:
+                    novaCaracteristica = JsonConvert.DeserializeObject<Regeneracao>(dadosAntiga);
                     break;
             }
 
@@ -95,7 +113,7 @@ namespace GeneticEvo.Entidades
             string dados = JsonConvert.SerializeObject(individuo);
             var novo = JsonConvert.DeserializeObject<Individuo>(dados);
             novo.Geracao += 1;
-            novo.ChaceMutacao += 0.001;
+            novo.ChaceMutacao += 0.01;
             novo.Filiacao = novo.Nome;
             novo.Nome = $"{novo.Especie}{novo.Geracao}";
 
@@ -113,15 +131,20 @@ namespace GeneticEvo.Entidades
         {
             int sortudo = new Random().Next(individuo.Caracteristicas.Count);
             int campoSortudo = new Random().Next(0, 10);
+            string campoModificado = string.IsNullOrEmpty(individuo.Caracteristicas[sortudo].DescValores[campoSortudo]) ? "Não utilizado" : individuo.Caracteristicas[sortudo].DescValores[campoSortudo];
+
+            if (campoModificado.Equals("Não utilizado"))
+            {
+                return individuo;
+            }
 
             var nomeEspecie = gerarNome();
             individuo.Especie = nomeEspecie;
-            individuo.Nome = nomeEspecie+1;
+            individuo.Nome = nomeEspecie + 1;
             individuo.Geracao = 1;
 
             double valorMutado = individuo.ChaceMutacao * (new Random().NextDouble() + new Random().NextDouble());
 
-            string campoModificado = string.IsNullOrEmpty(individuo.Caracteristicas[sortudo].DescValores[campoSortudo]) ? "Não utilizado" : individuo.Caracteristicas[sortudo].DescValores[campoSortudo];
             switch (campoSortudo)
             {
                 case 10:
@@ -134,9 +157,10 @@ namespace GeneticEvo.Entidades
             }
 
             individuo.Caracteristicas[sortudo].Multiplicador += valorMutado;
-            individuo.ChaceMutacao = 0.001;
+            individuo.ChaceMutacao = 0.01;
 
-            ServiceHelper.GetService<MainPage>().DisplayAlert("Mutação", $"Mutação no {individuo.Nome} na caracteristica {individuo.Caracteristicas[sortudo].Nome} no campo {campoModificado}", "OK");
+            ServiceHelper.GetService<AlertaMutacoes>().Mutacoes.Add($"Mutação no individuo {individuo.Nome} filho de {individuo.Filiacao} na caracteristica {individuo.Caracteristicas[sortudo].Nome} no campo {campoModificado}");
+            ServiceHelper.GetService<AlertaMutacoes>().HouveMutacoes = true;
             return individuo;
         }
 
@@ -160,5 +184,23 @@ namespace GeneticEvo.Entidades
             return Name;
         }
 
+        public void definirComoMorto()
+        {
+            Vivo = false;
+            TempoVida = 0;
+        }
+
+        public bool validaMutacao()
+        {
+            var rand = new Random().Next(1, 5);
+            double validador = rand * ChaceMutacao;
+
+            if (validador > 0.7)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

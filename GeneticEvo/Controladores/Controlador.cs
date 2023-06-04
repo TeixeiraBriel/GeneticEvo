@@ -1,5 +1,6 @@
 ﻿using GeneticEvo.Entidades;
 using GeneticEvo.Entidades.Caracteristicas;
+using GeneticEvo.Enumeradores;
 using GeneticEvo.Helpers;
 
 namespace GeneticEvo.Controladores
@@ -13,6 +14,13 @@ namespace GeneticEvo.Controladores
             mundo = ServiceHelper.GetService<Mundo>();
         }
 
+        public void iniciaMundo()
+        {
+            mundo = new Mundo();
+            iniciaAlgaBase();
+            iniciaPredadorBase();
+        }
+
         public void iniciaAlgaBase()
         {
             Individuo Alga = new Individuo()
@@ -24,11 +32,33 @@ namespace GeneticEvo.Controladores
                 Vida = 100,
                 Energia = 100,
                 TempoVida = 20,
-                Caracteristicas = new List<Caracteristica> { new Fotossintese(), new Meiose(), new Digestao() }
+                Filiacao = "N/A",
+                Caracteristicas = new List<Caracteristica> { new Fotossintese(), new Meiose(), new Regeneracao() }
             };
 
+            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Regeneracao).Last().Valores[1] = 15;
+            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Meiose).Last().Valores[2] = 8;//Tempo de Vida
+            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Meiose).Last().Valores[1] = 4;//Filhotes Gerados
             mundo.registroEspecies.Add(new RegistroEspecie() { Nome = "Alga", AnoOrigem = 0, EspecieOrigem = "N/A", UltimoRegistro = 1});
             mundo.EspecieList.Add(Alga);
+        }
+        public void iniciaPredadorBase()
+        {
+            Individuo Predador = new Individuo()
+            {
+                Nome = "Predador1",
+                Especie = "Predador",
+                Geracao = 1,
+                DataOrigem = 0,
+                Vida = 100,
+                Energia = 100,
+                TempoVida = 20,
+                Filiacao = "N/A",
+                Caracteristicas = new List<Caracteristica> { new Estomago(), new Morder(), new Digestao(), new Regeneracao(), new Meiose() }
+            };
+
+            mundo.registroEspecies.Add(new RegistroEspecie() { Nome = "Predador", AnoOrigem = 0, EspecieOrigem = "N/A", UltimoRegistro = 1 });
+            mundo.EspecieList.Add(Predador);
         }
 
         public void avancaGeracao()
@@ -42,6 +72,12 @@ namespace GeneticEvo.Controladores
                 mundo = especie.ExecutaCaracteristicas(mundo);
             }
 
+            var alerta = ServiceHelper.GetService<AlertaMutacoes>();
+            if (alerta.HouveMutacoes)
+            {
+                alerta.mostrarAlerta();
+                alerta.resetAlerta();
+            }
             mundo.Geracao++;
         }
 

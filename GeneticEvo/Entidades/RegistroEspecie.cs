@@ -12,5 +12,7 @@ namespace GeneticEvo.Entidades
         public int AnoOrigem { get; set; }
         public string EspecieOrigem { get; set; }
         public int UltimoRegistro { get; set; }
+        public int QuantidadeAtual { get; set; }
+        public int QuantidadeExistente { get; set; }
     }
 }

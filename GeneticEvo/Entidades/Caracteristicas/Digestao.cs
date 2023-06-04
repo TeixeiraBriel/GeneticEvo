@@ -1,27 +1,43 @@
-﻿using System;
+﻿using GeneticEvo.Enumeradores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace GeneticEvo.Entidades.Caracteristicas
 {
     public class Digestao : Caracteristica
     {
+        //CAPAZ DE DIGERIR QUALQUER ALIMENTO????
         public Digestao()
         {
-            Nome = "Digestao";
-            Prioridade = 9;
+            Observacoes = "";
+
+            Prioridade = 8;
+            Nome = EnumCaracteristicas.Digestao;
             DescValores[0] = "Multiplo ganho Energia";
-            Valores[0]= 1;
+            Valores[0] = 5;
+            DescValores[1] = "Quantidade comida capaz de digerir";
+            Valores[1] = 10;
         }
 
-        public override Mundo Executa(Individuo individuo = null, Mundo mundo = null)
+        public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)
         {
-            if (individuo.Fome < 0)
+            if (individuo.Caracteristicas.Exists(x => x.Nome == EnumCaracteristicas.Estomago))
             {
-                individuo.Energia += individuo.Fome * -Valores[0];
-                individuo.Fome = 0;
+                double qtdComidaEstomago = individuo.Caracteristicas.FirstOrDefault(x => x.Nome == EnumCaracteristicas.Estomago).Valores[1];
+                double qtdComidaConsumida = Valores[1];
+
+                if (qtdComidaEstomago < 0)
+                    qtdComidaConsumida = 0;
+                else if (qtdComidaEstomago - qtdComidaConsumida < 0)
+                    qtdComidaConsumida = qtdComidaEstomago;
+
+                individuo.Caracteristicas.FirstOrDefault(x => x.Nome == EnumCaracteristicas.Estomago).Valores[1] += qtdComidaConsumida * -1;
+                individuo.Energia += qtdComidaConsumida * Valores[0];
+
             }
 
             return mundo;

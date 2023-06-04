@@ -1,4 +1,5 @@
-﻿using GeneticEvo.Helpers;
+﻿using GeneticEvo.Enumeradores;
+using GeneticEvo.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,19 @@ namespace GeneticEvo.Entidades.Caracteristicas
     {
         public Meiose()
         {
-            Nome = "Meiose";
-            Prioridade = 1;
+            Observacoes = "";
+
+            Prioridade = 10;
+            Nome = EnumCaracteristicas.Meiose;
             DescValores[0] = "Gasto Energia";
-            Valores[0] = -50;
+            Valores[0] = -40;
             DescValores[1] = "Filhotes Gerados";
-            Valores[1] = 2;
+            Valores[1] = 1;
             DescValores[2] = "Tempo de Vida";
-            Valores[2] = 20;
+            Valores[2] = 10;
         }
 
-        public override Mundo Executa(Individuo individuo = null, Mundo mundo = null)
+        public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)
         {
             if (individuo.Energia + Valores[0] > 0)
             {
@@ -30,7 +33,7 @@ namespace GeneticEvo.Entidades.Caracteristicas
                 for (int i = 0; i < Valores[1]; i++)
                 {
                     Individuo filhote = new Individuo();
-                    if (validaMutacao(individuo))
+                    if (individuo.validaMutacao())
                     {
                         var novo = GeraFilhoteComum(individuo);
                         filhote = novo.GeraFilhoteMutacao(novo);
@@ -50,24 +53,11 @@ namespace GeneticEvo.Entidades.Caracteristicas
                     {
                         mundo.registroEspecies.Add(new RegistroEspecie() { Nome = filhote.Especie, AnoOrigem = mundo.Geracao, EspecieOrigem = filhote.Filiacao, UltimoRegistro = mundo.Geracao });
                     }
+
                     mundo.EspecieList.Add(filhote);
                 }
-                mundo.EspecieList.Remove(individuo);
             }
             return mundo;
-        }
-
-        bool validaMutacao(Individuo individuo)
-        {
-            Random rand = new Random();
-            double validador = rand.NextDouble();
-
-            if (individuo.ChaceMutacao > validador)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         Individuo GeraFilhoteComum(Individuo individuo)

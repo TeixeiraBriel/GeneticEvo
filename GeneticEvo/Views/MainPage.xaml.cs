@@ -17,10 +17,13 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 
         _controlador = new Controlador();
-        _controlador.iniciaAlgaBase();
+        _controlador.iniciaMundo();
 
         lblTitulo.Text = $"Ano: {_controlador.mundo.Geracao} com {_controlador.mundo.EspecieList.Count} Individuos";
         CriarListIndividuos();
+
+        ListView listView = new ListView();
+        listView.SetBinding(ItemsView.ItemsSourceProperty, "Monkeys");
     }
 
     private void OnCounterClicked(object sender, EventArgs e)
@@ -38,6 +41,7 @@ public partial class MainPage : ContentPage
         StackVertical.Children.Clear();
         filtroEspecie = new List<Tuple<string, int>>();
         List<Individuo> Individuos = _controlador.mundo.EspecieList;
+        List<RegistroEspecie> listaEspecies = _controlador.mundo.registroEspecies;
 
         foreach (Individuo individo in Individuos)
         {
@@ -63,7 +67,6 @@ public partial class MainPage : ContentPage
                     $"Especie:{individo.Especie}    " +
                     $"Filiacao:{individo.Filiacao}    " +
                     $"Vida:{individo.Vida}   " +
-                    $"Fome:{individo.Fome}   " +
                     $"Energia:{individo.Energia}   " +
                     $"TempoVida:{individo.TempoVida}   " +
                     $"Origem:{individo.DataOrigem}"
@@ -94,7 +97,12 @@ public partial class MainPage : ContentPage
     {
         FiltrarPorEspecie = true;
         CriarListIndividuos();
+    }
 
+    private void OnReiniciarClicked(object sender, EventArgs e)
+    {
+        _controlador.iniciaMundo();
+        CriarListIndividuos();
     }
 }
 

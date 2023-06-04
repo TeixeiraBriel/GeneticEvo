@@ -11,6 +11,7 @@ namespace IoC
         {
             services.AddSingleton<Mundo>();
             services.AddSingleton<MainPage>();
+            services.AddSingleton<AlertaMutacoes>();
         }
     }
 }

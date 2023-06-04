@@ -18,7 +18,10 @@ namespace GeneticEvo.Helpers
             {
                 new Digestao(),
                 new Fotossintese(),
-                new Meiose()
+                new Meiose(),
+                new Morder(),
+                new Estomago(),
+                new Regeneracao()
             };
         }
     }

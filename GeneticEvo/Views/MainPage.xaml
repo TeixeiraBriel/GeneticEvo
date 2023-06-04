@@ -24,10 +24,17 @@
 
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Button
+                x:Name="ReiniciarBtn"
+                Text="Reiniciar"
+                Clicked="OnReiniciarClicked"
+                HorizontalOptions="Center" />
+                
+                <Button
                 x:Name="CounterBtn"
                 Text="Avançar Ano"
                 Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                Margin="5,0,5,0"/>
 
                 <Button
                 x:Name="TodosBtn"
