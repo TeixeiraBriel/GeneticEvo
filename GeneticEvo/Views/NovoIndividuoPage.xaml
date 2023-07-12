@@ -5,60 +5,105 @@
              Title="NovoIndividuoPage">
 
     <ScrollView>
-        
+
         <VerticalStackLayout
             Spacing="10"
             Padding="30,0">
-            <Label 
-            Text="Novo Individuo"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+            <VerticalStackLayout.Resources>
+                <Style x:Key="entryFormulario" TargetType="Entry">
+                    <Setter Property="WidthRequest" Value="300"/>
+                    <Setter Property="HorizontalOptions" Value="Start"/>
+                    <Setter Property="ClearButtonVisibility" Value="WhileEditing"/>
+                </Style>
+                <Style x:Key="btn" TargetType="Button">
+                    <Setter Property="WidthRequest" Value="180"/>
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+                <Style x:Key="LabelTitulo" TargetType="Label">
+                    <Setter Property="FontSize" Value="Large"/>
+                    <Setter Property="FontAttributes" Value="Bold"/>
+                    <Setter Property="HorizontalOptions" Value="Center"/>
+                    <Setter Property="Margin" Value="0, 10, 0, 10"/>
+                </Style>
+            </VerticalStackLayout.Resources>
+            <Label Text="Novo Individuo"
+                   Style="{StaticResource LabelTitulo}"/>
 
             <StackLayout 
                 HorizontalOptions="Center">
                 <Label Text="Nome:"/>
                 <Entry x:Name="inputNome"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"
+                       IsReadOnly="True"
+                       />
 
                 <Label Text="Especie:"/>
                 <Entry x:Name="inputEspecie"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Filiação:"/>
                 <Entry x:Name="inputFiliacao"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Vida:"/>
                 <Entry x:Name="inputVida"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Fome:"/>
                 <Entry x:Name="inputFome"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Energia:"/>
                 <Entry x:Name="inputEnergia"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Tempo de Vida:"/>
                 <Entry x:Name="inputTempoVida"
-               WidthRequest="300"
-               HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
                 <Label Text="Origem:"/>
                 <Entry x:Name="inputOrigem"
-                   WidthRequest="300"
-                   HorizontalOptions="Start"/>
+                       Style="{StaticResource entryFormulario}"/>
 
-                <Button Text="Confirmar" Clicked="Button_Confirmar"/>
+                <Button Text="Confirmar" 
+                        Clicked="Button_Confirmar"
+                        Style="{StaticResource btn}"/>
             </StackLayout>
-            
+
+            <StackLayout>
+                <!--<Label 
+                    Text="Características"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                <Entry x:Name="inputFiltro" TextChanged="inputFiltro_PropertyChanged"/>-->
+                <Button x:Name="btnAddEspecie" 
+                        Text="+ Nova característica" 
+                        Clicked="btnAddEspecie_Clicked"
+                        Style="{StaticResource btn}"/>
+
+                <StackLayout x:Name="listView" 
+                             IsVisible="false"
+                             HorizontalOptions="Center">
+                    <Label Text="Caracteristicas" Style="{StaticResource LabelTitulo}"/>
+
+                    <!--<Button Text="Fotossíntese" Clicked="OnButtonClicked"/>
+                        <Button Text="Meiose" Clicked="OnButtonClicked"/>-->
+
+                    <Label Text="" x:Name="ContentLabel" Margin="20" FontSize="Medium"/>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout HeightRequest="200">
+                <Button x:Name="btnMostrarEspecie"
+                        Text="Nova"
+                        Clicked="btnMostrarEspecie_Clicked"
+                        Style="{StaticResource btn}"/>
+                <StackLayout x:Name="containerCaracteristicas" IsVisible="false">
+                    <Label Text="Caracteristicas" Style="{StaticResource LabelTitulo}"/>
+                    <Button Text="Digestão" Clicked="escolherEspecie" Style="{StaticResource btn}"/>
+                </StackLayout>
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

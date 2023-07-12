@@ -1,6 +1,6 @@
 ﻿using GeneticEvo.Entidades.Caracteristicas;
 using GeneticEvo.Helpers;
-using Microsoft.Maui.Controls.Compatibility.Platform.UWP;
+using Microsoft.Maui.Controls.Compatibility.Platform;
 using Microsoft.Maui.Controls.Platform;
 using Newtonsoft.Json;
 using System;
