@@ -1,0 +1,67 @@
+﻿@page "/mundo"
+
+@using Dominio.Entidades;
+@using Dominio.Enumeradores;
+@using Dominio.Interfaces;
+
+@inject Mundo mundo;
+@inject IIndividuoServicos IIndividuoServicos;
+@inject IMundoServicos IMundoServicos;
+
+<div class="container-fluid">
+    <h1>Counter</h1>
+    <button class="btn btn-primary" @onclick="IncrementCount">Adicionar Alga</button>
+</div>
+
+<p role="status">Current count: @currentCount</p>
+<button class="btn btn-primary" @onclick="ProxGeracao">Prox. Geracao</button>
+
+@code {
+
+    private int currentCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentCount = mundo.EspecieList.Count;
+    }
+
+    private void IncrementCount()
+    {
+        Individuo Alga = new Individuo()
+            {
+                Nome = "Alga1",
+                Especie = "Alga",
+                Geracao = 1,
+                DataOrigem = 0,
+                Vida = 100,
+                Energia = 100,
+                TempoVida = 20,
+                Filiacao = "N/A",
+                Caracteristicas = new List<Caracteristica>()
+            };
+
+        double[] valores = new double[10]{
+             0,
+             1,
+             10,
+             0,
+             0,
+             0,
+             0,
+             0,
+             0,
+             0
+    };
+
+        IIndividuoServicos.AdicionarCaracteristica(Alga, EnumCaracteristicas.Fotossintese, valores);
+        IIndividuoServicos.AdicionarCaracteristica(Alga, EnumCaracteristicas.Meiose, valores);
+        IIndividuoServicos.AdicionarIndividuo(mundo, Alga);
+        currentCount = mundo.EspecieList.Count;
+    }
+
+    private void ProxGeracao()
+    {
+        IMundoServicos.AvancaGeracao(mundo);
+        currentCount = mundo.EspecieList.Count;
+    }
+}

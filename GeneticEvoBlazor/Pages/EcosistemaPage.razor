@@ -1,0 +1,48 @@
+﻿@page "/ecosistema"
+@using Dominio.Entidades;
+
+@inject Mundo mundo
+
+<h1>Individuos</h1>
+
+<p>Veja todos indivudos no seu mundo atual.</p>
+
+@if (EspecieList == null)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data Origem</th>
+                <th>N° Caracteristicas</th>
+                <th>Tempo de vida</th>
+                <th>Filiação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var individuo in EspecieList)
+            {
+                <tr>
+                    <td>@individuo.Nome</td>
+                    <td>@individuo.DataOrigem</td>
+                    <td>@individuo.Caracteristicas.Count</td>
+                    <td>@individuo.TempoVida</td>
+                    <td>@individuo.Filiacao</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Individuo> EspecieList = new List<Individuo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        EspecieList = mundo.EspecieList;
+    }
+}
