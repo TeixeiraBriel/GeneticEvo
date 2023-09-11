@@ -1,4 +1,54 @@
-﻿<h3>NovoIndividuo</h3>
+﻿@page "/Individuo/Novo"
+@using Dominio.Enumeradores;
+
+<h3>NovoIndividuo</h3>
+
+<EditForm Model="@Model" OnSubmit="@Submit">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+        <InputText @bind-Value="Model!.Id" class="form-control" placeholder="Teste" />
+    </div>
+    <div class="input-group mb-3">
+        <InputSelect @bind-Value="Model!.Valor" class="form-select" aria-label="Default select example">
+            <option selected value="--nenhuma--">--nenhuma--</option>
+            @foreach (var item in valores)
+            {
+                <option value="@item">@item</option>
+            }
+        </InputSelect>
+        <button type="button" class="btn btn-success" onclick="@adicionarValor">Adicionar</button>
+    </div>
+    <button type="submit" class="btn btn-primary">Concluir</button>
+</EditForm>
+
+@code {
+    List<EnumCaracteristicas> valores = Enum.GetValues(typeof(EnumCaracteristicas)).Cast<EnumCaracteristicas>().ToList();
+    List<EnumCaracteristicas> valoresAdicionados = new List<EnumCaracteristicas>();
+    public Starship? Model { get; set; }
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit()
+    {
+    }
+
+    private void adicionarValor()
+    {
+        if (Model.Valor == "--nenhuma--")
+            return;
+
+        EnumCaracteristicas selecionado = valores.FirstOrDefault(x => x.ToString() == Model.Valor);
+        valoresAdicionados.Add(selecionado);
+        valores.Remove(selecionado);
+        Model.Valor = "--nenhuma--";
+    }
+
+    public class Starship
+    {
+        public string? Id { get; set; }
+        public string? Valor { get; set; }
+    }
+}
 
 @code {
 
