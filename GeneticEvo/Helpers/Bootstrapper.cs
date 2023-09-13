@@ -9,6 +9,7 @@ namespace IoC
     {
         public Bootstrapper(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<Grupos>();
             services.AddSingleton<Mundo>();
             services.AddSingleton<MainPage>();
             services.AddSingleton<AlertaMutacoes>();

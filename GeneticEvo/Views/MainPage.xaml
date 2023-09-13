@@ -33,7 +33,7 @@
                 <Button
                 x:Name="CounterBtn"
                 Text="Avançar Ano"
-                Clicked="OnCounterClicked"
+                Clicked="AvancarAnoClicked"
                 HorizontalOptions="Center"
                 Margin="5,0,5,0"/>
             </HorizontalStackLayout>

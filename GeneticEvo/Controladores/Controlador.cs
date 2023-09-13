@@ -9,10 +9,12 @@ namespace GeneticEvo.Controladores
     public class Controlador
     {
         public Mundo mundo;
+        public Grupos grupos;
 
         public Controlador()
         {
             mundo = ServiceHelper.GetService<Mundo>();
+            grupos = ServiceHelper.GetService<Grupos>();
         }
 
         public void iniciaMundo()
@@ -21,15 +23,28 @@ namespace GeneticEvo.Controladores
             mundo.Geracao = 1;
             mundo.registroEspecies = new List<RegistroEspecie>();
 
-            iniciaAlgaBase();
-            iniciaPredadorBase();
+            iniciaGrupo();
         }
 
-        public void iniciaAlgaBase()
+        void iniciaGrupo()
         {
+            if (grupos.GrupoAtivo == null)
+                iniciaGrupoBase();
+
+            grupos.GrupoAtivo.Individuos.ForEach(x =>
+            {
+                mundo.EspecieList.Add(x);
+                mundo.registroEspecies.Add(new RegistroEspecie() { Nome = x.Especie, AnoOrigem = 0, EspecieOrigem = "N/A", UltimoRegistro = 1 });
+            });
+        }
+
+        void iniciaGrupoBase()
+        {
+            Grupo grupoBase = new Grupo();
+
             Individuo Alga = new Individuo()
             {
-                Nome = "Alga1",
+                Nome = "Alga",
                 Especie = "Alga",
                 Geracao = 1,
                 DataOrigem = 0,
@@ -40,18 +55,10 @@ namespace GeneticEvo.Controladores
                 Caracteristicas = new List<Caracteristica> { new Fotossintese(), new Meiose(), new Regeneracao() }
             };
 
-            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Regeneracao).Last().Valores[1] = 15;
-            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Meiose).Last().Valores[2] = 8;//Tempo de Vida
-            Alga.Caracteristicas.Where(a => a.Nome == EnumCaracteristicas.Meiose).Last().Valores[1] = 4;//Filhotes Gerados
-            mundo.registroEspecies.Add(new RegistroEspecie() { Nome = "Alga", AnoOrigem = 0, EspecieOrigem = "N/A", UltimoRegistro = 1});
-            mundo.EspecieList.Add(Alga);
-        }
-        public void iniciaPredadorBase()
-        {
             Individuo Predador = new Individuo()
             {
-                Nome = "Predador1",
-                Especie = "Predador",
+                Nome = "Gafanhoto",
+                Especie = "Gafanhoto",
                 Geracao = 1,
                 DataOrigem = 0,
                 Vida = 100,
@@ -61,8 +68,16 @@ namespace GeneticEvo.Controladores
                 Caracteristicas = new List<Caracteristica> { new Estomago(), new Morder(), new Digestao(), new Regeneracao(), new Meiose() }
             };
 
-            mundo.registroEspecies.Add(new RegistroEspecie() { Nome = "Predador", AnoOrigem = 0, EspecieOrigem = "N/A", UltimoRegistro = 1 });
-            mundo.EspecieList.Add(Predador);
+            grupoBase.Individuos.Add(Predador);
+            grupoBase.Individuos.Add(Alga);
+            grupoBase.Individuos.Add(Alga);
+            grupoBase.Individuos.Add(Alga);
+            grupoBase.Individuos.Add(Alga);
+            grupoBase.Individuos.Add(Alga);
+
+            grupoBase.Nome = "Grupo Base";
+            grupoBase.Ativo = true;
+            grupos.listGrupos.Add(grupoBase);
         }
 
         public void avancaGeracao()

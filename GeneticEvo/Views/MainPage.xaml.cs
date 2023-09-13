@@ -62,16 +62,23 @@ public partial class MainPage : ContentPage
         atualizaDadosTela();
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
-    {
-        _controlador.avancaGeracao();
-        atualizaDadosTela();
-    }
-
     private void OnReiniciarClicked(object sender, EventArgs e)
     {
         _controlador.iniciaMundo();
         atualizaDadosTela();
+    }
+
+    private void AvancarAnoClicked(object sender, EventArgs e)
+    {
+        if (_controlador.mundo.EspecieList.Count > 0)
+        {
+        _controlador.avancaGeracao();
+        atualizaDadosTela();
+        }
+        else
+        {
+            DisplayAlert("Fim", "Não existe mais individuos, fim da linha", "Ok");
+        }
     }
 }
 

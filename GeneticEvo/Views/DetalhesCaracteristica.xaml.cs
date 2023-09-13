@@ -17,11 +17,11 @@ public partial class DetalhesCaracteristica : ContentPage
 	void inicializaDados()
     {
         PainelCentral.Children.Add(
-            new Label() { Text = $"Prioridade:{_caracteristica.Prioridade}" });
+            new Label() { Text = $"Prioridade: {_caracteristica.Prioridade}" });
         PainelCentral.Children.Add(
-            new Label() { Text = $"Observação:{_caracteristica.Observacoes}" });
+            new Label() { Text = $"Observação: {_caracteristica.Observacoes}" });
         PainelCentral.Children.Add(
-            new Label() { Text = $"Multiplicador:{_caracteristica.Multiplicador}" });
+            new Label() { Text = $"Multiplicador: {_caracteristica.Multiplicador}" });
 
         for (int i = 0; i < 10; i++)
 		{

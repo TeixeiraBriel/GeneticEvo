@@ -19,10 +19,10 @@
                 ContentTemplate="{DataTemplate local:DetalhesPage}"
                 Route="DetalhesPage"/>
         </Tab>
-        <Tab Title="Novo Inidividuo">
+        <Tab Title="Mais">
             <ShellContent
-                Title="Novo Inidividuo"
-                ContentTemplate="{DataTemplate local:NovoIndividuoPage}"
+                Title="Mais"
+                ContentTemplate="{DataTemplate local:OpcoesPage}"
                 Route="NovoIndividuoPage"/>
         </Tab>
     </TabBar>

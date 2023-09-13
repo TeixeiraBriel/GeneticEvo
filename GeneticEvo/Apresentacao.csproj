@@ -67,6 +67,9 @@
 	  <Compile Update="Views\DetalhesPage.xaml.cs">
 	    <DependentUpon>DetalhesPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\DetalhesGrupoPage.xaml.cs">
+	    <DependentUpon>DetalhesGrupoPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,7 +79,16 @@
 	  <MauiXaml Update="Views\DetalhesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DetalhesGrupoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\GruposPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\NovoIndividuoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\OpcoesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
