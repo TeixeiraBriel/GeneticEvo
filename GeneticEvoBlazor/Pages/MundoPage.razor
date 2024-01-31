@@ -9,16 +9,13 @@
 @inject IMundoServicos IMundoServicos;
 
 <div class="container-fluid">
-    <h1>Counter</h1>
+    <h1>Gestão Individuos</h1>
     <button class="btn btn-primary" @onclick="IncrementCount">Adicionar Alga</button>
+
+    <NavLink class="nav-link" href="Individuo/Novo">
+        <button class="btn btn-primary">Novo Individuo</button>
+    </NavLink>
 </div>
-
-<p role="status">Current count: @currentCount</p>
-<button class="btn btn-primary" @onclick="ProxGeracao">Prox. Geracao</button>
-
-<NavLink class="nav-link" href="Individuo/Novo">
-    <button class="btn btn-primary">Novo Individuo</button>
-</NavLink>
 
 
 @code {
@@ -42,14 +39,16 @@
                 Energia = 100,
                 TempoVida = 20,
                 Filiacao = "N/A",
-                Caracteristicas = new List<Caracteristica>()
+                Caracteristicas = new List<Caracteristica>(),
+                ComposicaoOrganica = new Elementos() { A = 10, B = 10, C = 10, D = 70 },
+                ToleranciaOrganica = new Elementos() { A = 100, B = 10, C = 10, D = 0 }
             };
 
         double[] valores = new double[10]{
-             0,
+             10,
              1,
              10,
-             0,
+             1.5,
              0,
              0,
              0,

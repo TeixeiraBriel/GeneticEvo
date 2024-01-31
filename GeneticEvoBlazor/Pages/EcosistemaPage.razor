@@ -1,11 +1,15 @@
 ﻿@page "/ecosistema"
 @using Dominio.Entidades;
+@using Dominio.Interfaces;
+@using GeneticEvoBlazor.Components
 
 @inject Mundo mundo
+@inject IMundoServicos IMundoServicos;
 
 <h1>Individuos</h1>
 
 <p>Veja todos indivudos no seu mundo atual.</p>
+<button class="btn btn-primary" @onclick="ProxGeracao">Prox. Geracao</button>
 
 @if (EspecieList == null)
 {
@@ -17,22 +21,29 @@ else
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Data Origem</th>
                 <th>N° Caracteristicas</th>
-                <th>Tempo de vida</th>
-                <th>Filiação</th>
+                <th>Quantidade</th>
+                <th>Funções</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var individuo in EspecieList)
+            @foreach (Individuo individuo in EspecieList.DistinctBy(x => x.Especie))
             {
                 <tr>
                     <td>@individuo.Nome</td>
-                    <td>@individuo.DataOrigem</td>
                     <td>@individuo.Caracteristicas.Count</td>
-                    <td>@individuo.TempoVida</td>
-                    <td>@individuo.Filiacao</td>
+                    <td>@EspecieList.Where(x => x.Especie == individuo.Especie).Count()</td>
+                    <td><button class="btn btn-primary" @onclick="(() => MostrarDetalhes(individuo))"><span class="oi oi-eye" aria-hidden="true"/></button></td>
                 </tr>
+
+                @if (Detalhar && individuo == IndividuoSelecionado)
+                {
+                    <tr>
+                        <td colspan="4">
+                            <TabelaPorEspecie EspecieList="@EspecieList.Where(x => x.Especie == individuo.Especie).ToList()" />
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -40,9 +51,27 @@ else
 
 @code {
     private List<Individuo> EspecieList = new List<Individuo>();
+    private bool Detalhar = false;
+    Individuo IndividuoSelecionado;
 
     protected override async Task OnInitializedAsync()
     {
         EspecieList = mundo.EspecieList;
+    }
+    private void ProxGeracao()
+    {
+        IMundoServicos.AvancaGeracao(mundo);
+    }
+    private void MostrarDetalhes(Individuo individuo)
+    {
+        if (IndividuoSelecionado == individuo)
+        {
+            Detalhar = !Detalhar;
+        }
+        else
+        {
+            Detalhar = true;
+            IndividuoSelecionado = individuo;
+        }
     }
 }

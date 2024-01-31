@@ -1,0 +1,87 @@
+﻿@page "/Individuo/Novo"
+@using Dominio.Entidades;
+@using Dominio.Enumeradores;
+@using Dominio.ViewModels;
+@using Dominio.Interfaces;
+
+@inject IIndividuo Individuo
+@inject IIndividuoServicos IIndividuoServicos;
+@inject NavigationManager NavigationManager
+
+<h3>NovoIndividuo</h3>
+
+<EditForm Model="@Model" OnSubmit="@Submit">
+    <div class="mb-3">
+        <label class="form-label">Nome:</label>
+        <InputText @bind-Value="Model.Especie" class="form-control" placeholder="Teste" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Energia:</label>
+        <InputText @bind-Value="Model.Energia" class="form-control" placeholder="Teste" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Vida:</label>
+        <InputText @bind-Value="Model.Vida" class="form-control" placeholder="Teste" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Expectativa de Vida:</label>
+        <InputText @bind-Value="Model.TempoVida" class="form-control" placeholder="Teste" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Adicionar Caracteristica:</label>
+        <div class="input-group mb-3">
+            <InputSelect @bind-Value="Model!.SelectedCaracteristica" class="form-select" aria-label="Default select example">
+                <option selected value="--nenhuma--">--nenhuma--</option>
+                @foreach (var item in valores)
+                {
+                    <option value="@item">@item</option>
+                }
+            </InputSelect>
+            <button type="button" class="btn btn-success" onclick="@adicionarValor">Adicionar</button>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Concluir</button>
+</EditForm>
+
+
+@code {
+    private bool HideLabel { get; set; } = true;
+    private NovaEspecieModel Model { get; set; }
+
+    List<EnumCaracteristicas> valores = Enum.GetValues(typeof(EnumCaracteristicas)).Cast<EnumCaracteristicas>().ToList();
+    List<EnumCaracteristicas> valoresAdicionados = new List<EnumCaracteristicas>();
+
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+    }
+
+    private void Submit()
+    {
+        Model.Caracteristicas = valoresAdicionados;
+        Individuo.Nome = Model.Especie;
+        Individuo.Energia = double.Parse(Model.Energia);
+        Individuo.Vida = double.Parse(Model.Vida);
+        Individuo.TempoVida = int.Parse(Model.TempoVida);
+        Individuo.Caracteristicas = new List<Caracteristica>();
+
+        foreach (var car in valoresAdicionados)
+        {
+            IIndividuoServicos.AdicionarCaracteristica(Individuo, car, new double[10]);
+        }
+
+        NavigationManager.NavigateTo("/Individuo/Novo/Detalhes");
+    }
+
+    private void adicionarValor()
+    {
+        if (Model.SelectedCaracteristica == "--nenhuma--")
+            return;
+
+        EnumCaracteristicas selecionado = valores.FirstOrDefault(x => x.ToString() == Model.SelectedCaracteristica);
+        valoresAdicionados.Add(selecionado);
+        valores.Remove(selecionado);
+        Model.SelectedCaracteristica = "--nenhuma--";
+    }
+}

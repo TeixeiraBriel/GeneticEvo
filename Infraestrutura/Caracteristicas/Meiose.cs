@@ -22,6 +22,7 @@ namespace GeneticEvo.Entidades.Caracteristicas
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)
         {
+            Valores[0] = Valores[0] > 0 ? Valores[0] * -1 : Valores[0];
             if (individuo.Energia + Valores[0] > 0)
             {
                 individuo.Energia += Valores[0];

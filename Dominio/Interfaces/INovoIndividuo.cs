@@ -1,8 +1,13 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Entidades;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Dominio.Entidades
+namespace Dominio.Interfaces
 {
-    public class Individuo : IIndividuo
+    public interface IIndividuo
     {
         public string Nome { get; set; }
         public int Geracao { get; set; }
@@ -16,17 +21,6 @@ namespace Dominio.Entidades
         public double ChaceMutacao { get; set; }
         public int TempoVida { get; set; }
         public bool Vivo { get; set; }
-        public regiaoMundo posNoMundo { get; set; }
         public List<Caracteristica> Caracteristicas { get; set; }
-        public Elementos ComposicaoOrganica { get; set; }
-        public Elementos ToleranciaOrganica { get; set; }
-
-        public Individuo()
-        {
-            ChaceMutacao = 0.02;
-            Vivo = true;
-            Caracteristicas = new List<Caracteristica>();
-        }
-
     }
 }

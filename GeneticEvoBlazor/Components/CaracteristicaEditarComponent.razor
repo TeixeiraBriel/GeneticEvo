@@ -1,0 +1,72 @@
+﻿@using Dominio.Entidades;
+<h3>@Caracteristica.Nome</h3>
+
+@if (Editando)
+{
+    <form>
+        @for (int i = 0; i < Caracteristica.DescValores.Length - 1; i++)
+        {
+            if (!string.IsNullOrEmpty(Caracteristica.DescValores[i]))
+            {
+                var indiceLocal = i;
+                <div>
+                    <label>@Caracteristica.DescValores[indiceLocal]</label>
+                    <input type="text" value="@Caracteristica.Valores[indiceLocal]" @oninput="(e => EditarValor(indiceLocal, e))" />
+                </div>
+            }
+        }
+
+        <button type="button" @onclick="SalvarEdicao">Salvar</button>
+    </form>
+}
+else
+{
+    @for (int i = 0; i < Caracteristica.DescValores.Length; i++)
+    {
+        if (!string.IsNullOrEmpty(Caracteristica.DescValores[i]))
+        {
+            <div>
+                <p>@Caracteristica.DescValores[i]</p>
+                <p>@Caracteristica.Valores[i]</p>
+            </div>
+        }
+    }
+
+    <button type="button" @onclick="IniciarEdicao">Editar</button>
+}
+
+@code {
+    [Parameter]
+    public Caracteristica Caracteristica { get; set; }
+    [Parameter]
+    public EventCallback OnSalvar { get; set; }
+
+    private bool Editando = false;
+
+    private void IniciarEdicao()
+    {
+        Editando = true;
+    }
+
+    private void EditarValor(int indice, ChangeEventArgs e)
+    {
+        if (double.TryParse(e.Value.ToString(), out double novoValor))
+        {
+            Caracteristica.Valores[indice] = novoValor;
+        }
+        else
+        {
+            // Tratar a situação em que a conversão falhou (por exemplo, exibir uma mensagem de erro)
+        }
+    }
+
+    private async void SalvarEdicao()
+    {
+        // Lógica para salvar os valores, por exemplo, chamar um serviço ou emitir um evento de salvamento
+        Editando = false;
+
+        // Notificar a página pai sobre a conclusão da edição
+        await OnSalvar.InvokeAsync(Caracteristica);
+    }
+
+}

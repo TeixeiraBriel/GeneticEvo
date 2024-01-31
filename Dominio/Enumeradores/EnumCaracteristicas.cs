@@ -8,6 +8,7 @@
         Morder,
         Estomago,
         Regeneracao,
-        Canibal
+        Canibal,
+        TransformarElemento
     }
 }

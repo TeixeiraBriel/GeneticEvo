@@ -2,6 +2,7 @@
 using Dominio.Enumeradores;
 using Dominio.Interfaces;
 using GeneticEvo.Entidades.Caracteristicas;
+using Infraestrutura.Caracteristicas;
 using System.Runtime.CompilerServices;
 
 namespace Infraestrutura.Servicos
@@ -40,6 +41,9 @@ namespace Infraestrutura.Servicos
 
         public Individuo GeraFilhoteComum(Individuo individuo, int Ano)
         {
+            if (individuo.Especie == null)
+                individuo.Especie = individuo.Nome;
+
             Individuo filhote = new Individuo();
             Util.CopyProperties<Individuo>(individuo, filhote);
             filhote.DataOrigem = Ano;
@@ -109,6 +113,7 @@ namespace Infraestrutura.Servicos
 
         public void AdicionarIndividuo(Mundo mundo, Individuo individuo)
         {
+            individuo.posNoMundo = mundo.regiaoMundo.FirstOrDefault();
             mundo.EspecieList.Add(individuo);
         }
 
@@ -117,6 +122,38 @@ namespace Infraestrutura.Servicos
             mundo.EspecieList.Remove(ind);
         }
 
+        public void AdicionarCaracteristica(IIndividuo individuo, EnumCaracteristicas caracteristicasEnum, double[] Valores)
+        {
+            Caracteristica novaCaracteristica = null;
+
+            switch (caracteristicasEnum)
+            {
+                case EnumCaracteristicas.Fotossintese:
+                    novaCaracteristica = new Fotossintese();
+                    break;
+                case EnumCaracteristicas.Digestao:
+                    novaCaracteristica = new Digestao();
+                    break;
+                case EnumCaracteristicas.Meiose:
+                    novaCaracteristica = new Meiose();
+                    break;
+                case EnumCaracteristicas.Morder:
+                    novaCaracteristica = new Morder();
+                    break;
+                case EnumCaracteristicas.Estomago:
+                    novaCaracteristica = new Estomago();
+                    break;
+                case EnumCaracteristicas.Regeneracao:
+                    novaCaracteristica = new Regeneracao();
+                    break;
+                case EnumCaracteristicas.TransformarElemento:
+                    novaCaracteristica = new TransformarElemento();
+                    break;
+            }
+
+            novaCaracteristica.Valores = Valores;
+            individuo.Caracteristicas.Add(novaCaracteristica);
+        }
         public void AdicionarCaracteristica(Individuo individuo, EnumCaracteristicas caracteristicasEnum, double[] Valores)
         {
             Caracteristica novaCaracteristica = null;

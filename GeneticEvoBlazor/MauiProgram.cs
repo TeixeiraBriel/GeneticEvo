@@ -1,4 +1,6 @@
-﻿using Infraestrutura;
+﻿using Dominio.Entidades;
+using Dominio.Interfaces;
+using Infraestrutura;
 using Microsoft.Extensions.Logging;
 
 namespace GeneticEvoBlazor;
@@ -21,6 +23,7 @@ public static class MauiProgram
         _ = new Bootstrapper(services, configuration);
 
         builder.Services.AddMauiBlazorWebView();
+		builder.Services.AddSingleton<IIndividuo, Individuo>();
 
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();

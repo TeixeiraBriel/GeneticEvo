@@ -1,0 +1,27 @@
+﻿@page "/Individuo/Novo/Detalhes"
+@using Dominio.Entidades;
+@using Dominio.Interfaces;
+@using Dominio.ViewModels;
+@using GeneticEvoBlazor.Components
+
+@inject NavigationManager NavigationManager
+@inject Mundo mundo;
+@inject IIndividuoServicos IIndividuoServicos;
+@inject IIndividuo Individuo
+
+<h2>@Individuo.Nome</h2>
+
+@foreach (var caracteristica in Individuo.Caracteristicas)
+{
+    <CaracteristicaEditarComponent Caracteristica="@caracteristica"/>
+}
+
+<button @onclick="@Finalizar">Finalizar</button>
+
+@code {
+    private void Finalizar()
+    {
+        IIndividuoServicos.AdicionarIndividuo(mundo, Individuo as Individuo);
+        NavigationManager.NavigateTo("/ecosistema");
+    }
+}
