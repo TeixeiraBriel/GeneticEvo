@@ -9,33 +9,27 @@ namespace Infraestrutura.Servicos
 {
     public class IndividuoServicos : IIndividuoServicos
     {
-        public Mundo ExecutaCaracteristicas(Individuo ind, Mundo mundo)
+        public Mundo ExecutaCaracteristicaEspecifica(Individuo ind, Mundo mundo, EnumCaracteristicas caracteristica)
         {
             if (ind.Vivo)
             {
-                for (int i = 10; i > 0; i--)
-                {
-                    List<Caracteristica> _caracteristicasAtual = ind.Caracteristicas.FindAll(x => x.Prioridade == i && x.Executar);
-                    foreach (Caracteristica caracteristicas in _caracteristicasAtual)
-                    {
-                        mundo = caracteristicas.Executa(ind, mundo);
-                    }
-                }
+                Caracteristica caracteristicas = ind.Caracteristicas.FirstOrDefault(x => x.Nome == caracteristica);
+                mundo = caracteristicas.Executa(ind, mundo);
             }
 
-            if (ind.Vida <= 0 && ind.Vivo) 
+            if (ind.Energia < 0)
+            {
+                ind.Vida += ind.Energia;
+                ind.Energia = 0;
+            }
+
+            if ((ind.Vida <= 0 || ind.TempoVida <= 0) && ind.Vivo)
             {
                 ind.Vivo = false;
                 ind.TempoVida = 0;
             }
-                
 
-                ind.TempoVida--;
-            if (ind.TempoVida <= 0 && mundo.EspecieList.FirstOrDefault(x => x == ind) != null)
-            {
-                RemoveIndividuo(mundo, ind);
-            }
-
+            ind.TempoVida--;
             return mundo;
         }
 
@@ -114,6 +108,7 @@ namespace Infraestrutura.Servicos
         public void AdicionarIndividuo(Mundo mundo, Individuo individuo)
         {
             individuo.posNoMundo = mundo.regiaoMundo.FirstOrDefault();
+            individuo.posNoMundo.QtdIndividuos++;
             mundo.EspecieList.Add(individuo);
         }
 
@@ -154,6 +149,7 @@ namespace Infraestrutura.Servicos
             novaCaracteristica.Valores = Valores;
             individuo.Caracteristicas.Add(novaCaracteristica);
         }
+
         public void AdicionarCaracteristica(Individuo individuo, EnumCaracteristicas caracteristicasEnum, double[] Valores)
         {
             Caracteristica novaCaracteristica = null;

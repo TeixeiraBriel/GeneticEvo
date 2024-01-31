@@ -10,15 +10,11 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "";
 
-            Prioridade = 10;
             Nome = EnumCaracteristicas.Regeneracao;
             Multiplicador = 1;
             DescValores[0] = "Quantidade minima para começar regenerar";
-            Valores[0] = 30;
             DescValores[1] = "Quantidade energia gasta";
-            Valores[1] = 5;
             DescValores[2] = "Quantidade vida ganha";
-            Valores[2] = 2;
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)

@@ -10,14 +10,10 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "";
 
-            Prioridade = 10;
             Nome = EnumCaracteristicas.Meiose;
             DescValores[0] = "Gasto Energia";
-            Valores[0] = -40;
             DescValores[1] = "Filhotes Gerados";
-            Valores[1] = 1;
             DescValores[2] = "Tempo de Vida";
-            Valores[2] = 10;
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)
@@ -50,6 +46,7 @@ namespace GeneticEvo.Entidades.Caracteristicas
                     }
 
                     mundo.EspecieList.Add(filhote);
+                    individuo.Decendentes++;
                 }
             }
             return mundo;

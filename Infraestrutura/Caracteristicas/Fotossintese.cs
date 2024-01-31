@@ -10,7 +10,6 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "Remove da região onde esta o Elemento A e transforma em Elemento B assim gerando energia.";
 
-            Prioridade = 8;
             Nome = EnumCaracteristicas.Fotossintese;
             Multiplicador = 1;
             DescValores[0] = "Quantidade Energia ganha";

@@ -22,7 +22,8 @@ else
             <tr>
                 <th>Nome</th>
                 <th>N° Caracteristicas</th>
-                <th>Quantidade</th>
+                <th>Vivos</th>
+                <th>Mortos</th>
                 <th>Funções</th>
             </tr>
         </thead>
@@ -32,15 +33,16 @@ else
                 <tr>
                     <td>@individuo.Nome</td>
                     <td>@individuo.Caracteristicas.Count</td>
-                    <td>@EspecieList.Where(x => x.Especie == individuo.Especie).Count()</td>
+                    <td>@EspecieList.Where(x => x.Especie == individuo.Especie && x.Vivo).Count()</td>
+                    <td>@EspecieList.Where(x => x.Especie == individuo.Especie && !x.Vivo).Count()</td>
                     <td><button class="btn btn-primary" @onclick="(() => MostrarDetalhes(individuo))"><span class="oi oi-eye" aria-hidden="true"/></button></td>
                 </tr>
 
                 @if (Detalhar && individuo == IndividuoSelecionado)
                 {
                     <tr>
-                        <td colspan="4">
-                            <TabelaPorEspecie EspecieList="@EspecieList.Where(x => x.Especie == individuo.Especie).ToList()" />
+                        <td colspan="5">
+                            <TabelaPorEspecie EspecieList="@EspecieList.Where(x => x.Especie == individuo.Especie  && x.Vivo).ToList()" />
                         </td>
                     </tr>
                 }

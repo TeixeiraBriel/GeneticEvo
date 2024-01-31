@@ -10,12 +10,9 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "Não tem execução, apenas armazena comida";
 
-            Prioridade = 0;
             Nome = EnumCaracteristicas.Canibal;
-            DescValores[1] = "Canibalismo: Positivo(Sim), Negativo(Não)";
-            Valores[1] = 1;
-            DescValores[2] = "Canibalismo Filhos: Positivo(Sim), Negativo(Não)";
-            Valores[2] = -1;
+            DescValores[0] = "Canibalismo: Positivo(Sim), Negativo(Não)";
+            DescValores[1] = "Canibalismo Filhos: Positivo(Sim), Negativo(Não)";
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)

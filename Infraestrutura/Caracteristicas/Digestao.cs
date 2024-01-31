@@ -10,12 +10,9 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "";
 
-            Prioridade = 8;
             Nome = EnumCaracteristicas.Digestao;
             DescValores[0] = "Multiplo ganho Energia";
-            Valores[0] = 5;
             DescValores[1] = "Quantidade comida capaz de digerir";
-            Valores[1] = 10;
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)

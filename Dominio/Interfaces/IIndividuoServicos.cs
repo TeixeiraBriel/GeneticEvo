@@ -5,7 +5,6 @@ namespace Dominio.Interfaces
 {
     public interface IIndividuoServicos
     {
-        Mundo ExecutaCaracteristicas(Individuo ind, Mundo mundo);
         Individuo GeraFilhoteComum(Individuo individuo, int Ano);
         Individuo GeraFilhoteMutacao(Individuo novo);
         bool validaMutacao(Individuo individuo);

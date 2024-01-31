@@ -11,7 +11,7 @@ namespace Dominio.Entidades
         public int EixoX {  get; set; }
         public int EixoY { get; set; }
         public int EixoZ { get; set; }
-
+        public int QtdIndividuos { get; set; }
         public Elementos Elementos { get; set; }
     }
 }

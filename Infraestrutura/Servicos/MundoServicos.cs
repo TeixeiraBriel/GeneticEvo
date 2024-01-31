@@ -15,8 +15,6 @@ namespace Infraestrutura.Servicos
     {
         public void AvancaGeracao(Mundo mundo)
         {
-
-
             List<Individuo> EspecieListAtual = new List<Individuo>();
             foreach (var item in mundo.EspecieList)
             {
@@ -26,8 +24,9 @@ namespace Infraestrutura.Servicos
             //List<Caracteristica> _caracteristicasAtual = Caracteristicas.FindAll(x => x.Prioridade == i && x.Executar);//ValidarVelocidade
             foreach (Individuo Individuo in EspecieListAtual)
             {
-                mundo = new IndividuoServicos().ExecutaCaracteristicas(Individuo, mundo);
+                new InteligenciaServicos().ExecutaDecisao(Individuo, mundo);
             }
+
             mundo.Geracao++;
         }
 

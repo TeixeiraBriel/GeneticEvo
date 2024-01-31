@@ -13,6 +13,7 @@ namespace Infraestrutura
             services.AddSingleton<Mundo>();
             services.AddScoped<IIndividuoServicos, IndividuoServicos>();
             services.AddScoped<IMundoServicos, MundoServicos>();
+            services.AddScoped<IInteligenciaServicos, InteligenciaServicos>();
         }
     }
 }

@@ -10,7 +10,6 @@
 
 <div class="container-fluid">
     <h1>Gestão Individuos</h1>
-    <button class="btn btn-primary" @onclick="IncrementCount">Adicionar Alga</button>
 
     <NavLink class="nav-link" href="Individuo/Novo">
         <button class="btn btn-primary">Novo Individuo</button>
@@ -24,42 +23,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        currentCount = mundo.EspecieList.Count;
-    }
-
-    private void IncrementCount()
-    {
-        Individuo Alga = new Individuo()
-            {
-                Nome = "Alga1",
-                Especie = "Alga",
-                Geracao = 1,
-                DataOrigem = 0,
-                Vida = 100,
-                Energia = 100,
-                TempoVida = 20,
-                Filiacao = "N/A",
-                Caracteristicas = new List<Caracteristica>(),
-                ComposicaoOrganica = new Elementos() { A = 10, B = 10, C = 10, D = 70 },
-                ToleranciaOrganica = new Elementos() { A = 100, B = 10, C = 10, D = 0 }
-            };
-
-        double[] valores = new double[10]{
-             10,
-             1,
-             10,
-             1.5,
-             0,
-             0,
-             0,
-             0,
-             0,
-             0
-    };
-
-        IIndividuoServicos.AdicionarCaracteristica(Alga, EnumCaracteristicas.Fotossintese, valores);
-        IIndividuoServicos.AdicionarCaracteristica(Alga, EnumCaracteristicas.Meiose, valores);
-        IIndividuoServicos.AdicionarIndividuo(mundo, Alga);
         currentCount = mundo.EspecieList.Count;
     }
 

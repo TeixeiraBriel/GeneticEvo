@@ -10,17 +10,12 @@ namespace GeneticEvo.Entidades.Caracteristicas
         {
             Observacoes = "Depende de um estomago para gerar beneficios";
 
-            Prioridade = 9;
             Nome = EnumCaracteristicas.Morder;
             Multiplicador = 1;
             DescValores[0] = "Dano a Vida";
-            Valores[0] = 50;
             DescValores[1] = "Quantidade Comida Coletada";
-            Valores[1] = 25;
             DescValores[2] = "Gasto Energia";
-            Valores[2] = 25;
             DescValores[3] = "Quantidade estomago minima para morder";
-            Valores[3] = 30;
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)

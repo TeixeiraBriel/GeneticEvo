@@ -5,7 +5,6 @@ namespace Dominio.Entidades
     public abstract class Caracteristica
     {
         public EnumCaracteristicas Nome { get; set; }
-        public int Prioridade { get; set; }
         public bool Executar { get; set; }
         public double Multiplicador { get; set; }
         public string Observacoes { get; set; }
