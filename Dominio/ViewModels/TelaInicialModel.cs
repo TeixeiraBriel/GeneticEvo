@@ -4,7 +4,7 @@
     {
         public TelaInicialModel()
         {
-            NomeJogador = "Takato";
+            NomeJogador = "Gabriel";
             Conquistas = new List<string>() { "100 ind", "100 geracoes" };
         }
 
