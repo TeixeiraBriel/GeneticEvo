@@ -12,7 +12,7 @@ namespace Infraestrutura.Caracteristicas
     {
         public TransformarElemento()
         {
-            Observacoes = "";
+            Observacoes = "Consome um Elemento no incio da Geração e gera um segundo no fim da Geração";
 
             Nome = EnumCaracteristicas.TransformarElemento;
             Multiplicador = 1;
@@ -58,13 +58,18 @@ namespace Infraestrutura.Caracteristicas
                     case 3: elementos.D -= Valores[2]; break;
                 }
 
-                switch (Valores[1])
+                Action action = new Action(() =>
                 {
-                    case 0: elementos.A += Valores[2]; break;
-                    case 1: elementos.B += Valores[2]; break;
-                    case 2: elementos.C += Valores[2]; break;
-                    case 3: elementos.D += Valores[2]; break;
-                }
+                    switch (Valores[1])
+                    {
+                        case 0: elementos.A += Valores[2]; break;
+                        case 1: elementos.B += Valores[2]; break;
+                        case 2: elementos.C += Valores[2]; break;
+                        case 3: elementos.D += Valores[2]; break;
+                    }
+                });
+
+                mundo.AcoesFimGeracao.Add(action);
             }
             return mundo;
         }

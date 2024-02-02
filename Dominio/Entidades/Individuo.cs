@@ -10,11 +10,14 @@ namespace Dominio.Entidades
         public string Especie { get; set; }
         public int DataOrigem { get; set; }
         public double Vida { get; set; }
+        public double VidaMaxima { get; set; }
         public int PosicaoX { get; set; }
         public int PosicaoY { get; set; }
         public double Energia { get; set; }
+        public double EnergiaMaxima { get; set; }
         public double ChaceMutacao { get; set; }
         public int TempoVida { get; set; }
+        public int TempoVidaMaximo { get; set; }
         public bool Vivo { get; set; }
         public int Decendentes { get; set; }
         public regiaoMundo posNoMundo { get; set; }
@@ -28,7 +31,7 @@ namespace Dominio.Entidades
 
         public Individuo()
         {
-            ChaceMutacao = 0.02;
+            ChaceMutacao = 0.01;
             Vivo = true;
             Caracteristicas = new List<Caracteristica>();
             QTable = new List<QLerningOpcao>();

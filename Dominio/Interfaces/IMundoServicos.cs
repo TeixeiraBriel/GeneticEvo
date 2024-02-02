@@ -10,5 +10,7 @@ namespace Dominio.Interfaces
     public interface IMundoServicos
     {
         void AvancaGeracao(Mundo mundo);
+        void ZeraMundo();
+        Mundo GetMundo();
     }
 }

@@ -4,8 +4,8 @@
 @using Dominio.ViewModels;
 @using GeneticEvoBlazor.Components
 
-@inject NavigationManager NavigationManager
-@inject Mundo mundo;
+@inject NavigationManager NavigationManager;
+@inject IMundoServicos IMundoServicos;
 @inject IIndividuoServicos IIndividuoServicos;
 @inject IIndividuo Individuo
 
@@ -19,6 +19,12 @@
 <button @onclick="@Finalizar">Finalizar</button>
 
 @code {
+    private Mundo mundo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        mundo = IMundoServicos.GetMundo();
+    }
     private void Finalizar()
     {
         IIndividuoServicos.AdicionarIndividuo(mundo, Individuo as Individuo);

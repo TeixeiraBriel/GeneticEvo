@@ -3,6 +3,7 @@ using Dominio.Enumeradores;
 using Dominio.Interfaces;
 using GeneticEvo.Entidades.Caracteristicas;
 using Infraestrutura.Caracteristicas;
+using System.Buffers.Text;
 using System.Runtime.CompilerServices;
 
 namespace Infraestrutura.Servicos
@@ -16,6 +17,13 @@ namespace Infraestrutura.Servicos
                 Caracteristica caracteristicas = ind.Caracteristicas.FirstOrDefault(x => x.Nome == caracteristica);
                 mundo = caracteristicas.Executa(ind, mundo);
             }
+
+            if(ind.Energia > ind.EnergiaMaxima)
+                ind.Energia = ind.EnergiaMaxima;
+
+            if (ind.Vida > ind.VidaMaxima)
+                ind.Vida = ind.VidaMaxima;
+
 
             if (ind.Energia < 0)
             {
@@ -40,10 +48,21 @@ namespace Infraestrutura.Servicos
 
             Individuo filhote = new Individuo();
             Util.CopyProperties<Individuo>(individuo, filhote);
+            filhote.QTable = new List<QLerningOpcao>();
             filhote.DataOrigem = Ano;
             filhote.Nome = individuo.Especie + (individuo.Geracao + 1);
             filhote.Geracao++;
             filhote.Filiacao = individuo.Nome;
+            filhote.Vida = filhote.VidaMaxima;
+            filhote.Energia = filhote.EnergiaMaxima;
+            List<QLerningOpcao> QtableFilhote = new List<QLerningOpcao>();
+            foreach (var opcao in individuo.QTable)
+            {
+                var baseQ = new QLerningOpcao() { Estado = new EstadoIndividuo(), Peso = opcao.Peso, Caracteristica = opcao.Caracteristica};
+                Util.CopyProperties<EstadoIndividuo>(opcao.Estado, baseQ.Estado);
+                QtableFilhote.Add(baseQ);
+            }
+            filhote.QTable = QtableFilhote;
 
             return filhote;
         }
@@ -53,6 +72,8 @@ namespace Infraestrutura.Servicos
             //Nasce o Bebezinho
             Individuo filhote = new Individuo();
             Util.CopyProperties<Individuo>(individuo, filhote);
+            filhote.Vida = filhote.VidaMaxima;
+            filhote.Energia = filhote.EnergiaMaxima;
 
             //Mutação foi em local relevante
             int sortudo = new Random().Next(filhote.Caracteristicas.Count);
@@ -86,7 +107,7 @@ namespace Infraestrutura.Servicos
                 }
 
                 filhote.Caracteristicas[sortudo].Multiplicador += valorMutado;
-                filhote.ChaceMutacao = 0.01;
+                filhote.ChaceMutacao = 0.1;
 
                 return filhote;
             }
@@ -107,9 +128,16 @@ namespace Infraestrutura.Servicos
 
         public void AdicionarIndividuo(Mundo mundo, Individuo individuo)
         {
-            individuo.posNoMundo = mundo.regiaoMundo.FirstOrDefault();
-            individuo.posNoMundo.QtdIndividuos++;
-            mundo.EspecieList.Add(individuo);
+            Individuo novoIndividuo = new Individuo();
+            Util.CopyProperties<Individuo>(individuo, novoIndividuo);
+            novoIndividuo.Especie = novoIndividuo.Especie ?? novoIndividuo.Nome;
+            novoIndividuo.VidaMaxima = novoIndividuo.Vida;
+            novoIndividuo.EnergiaMaxima = novoIndividuo.Energia;
+            novoIndividuo.TempoVidaMaximo = novoIndividuo.TempoVida;
+
+            novoIndividuo.posNoMundo = mundo.regiaoMundo.FirstOrDefault();
+            novoIndividuo.posNoMundo.QtdIndividuos++;
+            mundo.EspecieList.Add(novoIndividuo);
         }
 
         public void RemoveIndividuo(Mundo mundo, Individuo ind)

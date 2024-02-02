@@ -21,11 +21,9 @@ namespace Infraestrutura.Servicos
                 return;
 
             individuoBase = new Individuo();
-            QTableBase = new List<QLerningOpcao>();
+            QTableBase = individuo.QTable;
 
             Util.CopyProperties<Individuo>(individuo, individuoBase);
-            if(individuo.QTable.Count > 0)
-                Util.CopyProperties<List<QLerningOpcao>>(individuo.QTable, QTableBase);
 
             if (!QTableBase.Any(x => x.Estado == retornaEstado()))
                 AdicionaEstado();
@@ -36,7 +34,6 @@ namespace Infraestrutura.Servicos
             AtualizarPeso(action, recompensa);
 
             individuo = individuoBase;
-            individuo.QTable = QTableBase;
         }
 
         private void AdicionaEstado()
@@ -110,14 +107,15 @@ namespace Infraestrutura.Servicos
             //BUSCA Não Se Ferir e Manter Energia
             double totalRecompensa = 0;
 
-            totalRecompensa += individuo.Energia == individuoBase.Energia ? 0.5 :
-                                individuo.Energia > individuoBase.Energia ? 1 : 0;
+            totalRecompensa += individuo.Energia < individuoBase.Energia ? -1 :
+                                individuo.Energia > individuoBase.Energia ? 0.5 : 0;
 
-            totalRecompensa += individuo.Vida == individuoBase.Vida ? 0.5 :
-                                individuo.Vida > individuoBase.Vida ? 1 : 0;
+            totalRecompensa += individuo.Vida > individuoBase.Vida ? 1 :
+                                individuo.Vida < individuoBase.Vida ? -1 : 0;
 
             var DecendentesSomados = individuo.Decendentes - individuoBase.Decendentes;
-            totalRecompensa += individuo.Decendentes > individuoBase.Decendentes ? 0.2 * DecendentesSomados : 0;
+            totalRecompensa += individuo.Decendentes > individuoBase.Decendentes ? 0.5 * DecendentesSomados : 
+                                individuo.TempoVida < individuo.TempoVida / 2 && individuo.Decendentes == 0 ? -1 : 0;
 
             return totalRecompensa;
         }

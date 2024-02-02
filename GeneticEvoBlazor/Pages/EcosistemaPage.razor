@@ -3,7 +3,6 @@
 @using Dominio.Interfaces;
 @using GeneticEvoBlazor.Components
 
-@inject Mundo mundo
 @inject IMundoServicos IMundoServicos;
 
 <h1>Individuos</h1>
@@ -20,7 +19,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Nome</th>
+                <th>Especie</th>
                 <th>N° Caracteristicas</th>
                 <th>Vivos</th>
                 <th>Mortos</th>
@@ -31,7 +30,7 @@ else
             @foreach (Individuo individuo in EspecieList.DistinctBy(x => x.Especie))
             {
                 <tr>
-                    <td>@individuo.Nome</td>
+                    <td>@individuo.Especie</td>
                     <td>@individuo.Caracteristicas.Count</td>
                     <td>@EspecieList.Where(x => x.Especie == individuo.Especie && x.Vivo).Count()</td>
                     <td>@EspecieList.Where(x => x.Especie == individuo.Especie && !x.Vivo).Count()</td>
@@ -55,9 +54,11 @@ else
     private List<Individuo> EspecieList = new List<Individuo>();
     private bool Detalhar = false;
     Individuo IndividuoSelecionado;
+    private Mundo mundo;
 
     protected override async Task OnInitializedAsync()
     {
+        mundo = IMundoServicos.GetMundo();
         EspecieList = mundo.EspecieList;
     }
     private void ProxGeracao()

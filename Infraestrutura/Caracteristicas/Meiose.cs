@@ -13,13 +13,12 @@ namespace GeneticEvo.Entidades.Caracteristicas
             Nome = EnumCaracteristicas.Meiose;
             DescValores[0] = "Gasto Energia";
             DescValores[1] = "Filhotes Gerados";
-            DescValores[2] = "Tempo de Vida";
         }
 
         public override Mundo Executa(Individuo individuo = null, Mundo mundo = null, TipoCaracteristicas tipoCaracteristicas = TipoCaracteristicas.Acao)
         {
             Valores[0] = Valores[0] > 0 ? Valores[0] * -1 : Valores[0];
-            if (individuo.Energia + Valores[0] > 0)
+            if (individuo.Energia + Valores[0] >= 0)
             {
                 individuo.Energia += Valores[0];
                 for (int i = 0; i < Valores[1]; i++)
@@ -55,9 +54,8 @@ namespace GeneticEvo.Entidades.Caracteristicas
         Individuo GeraFilhoteComum(Individuo individuo, int ano)
         {
             Individuo novo = new IndividuoServicos().GeraFilhoteComum(individuo, ano);
-            novo.Energia = novo.Energia / 2;
-            novo.Vida = novo.Vida / 2;
-            novo.TempoVida = (int)Valores[2];
+            novo.Energia = individuo.Energia / 2;
+            novo.Vida = individuo.Vida / 2;
 
             return novo;
         }

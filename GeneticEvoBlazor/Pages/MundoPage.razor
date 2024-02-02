@@ -3,8 +3,8 @@
 @using Dominio.Entidades;
 @using Dominio.Enumeradores;
 @using Dominio.Interfaces;
+@using GeneticEvoBlazor.Components
 
-@inject Mundo mundo;
 @inject IIndividuoServicos IIndividuoServicos;
 @inject IMundoServicos IMundoServicos;
 
@@ -14,21 +14,37 @@
     <NavLink class="nav-link" href="Individuo/Novo">
         <button class="btn btn-primary">Novo Individuo</button>
     </NavLink>
+
+    <NavLink class="nav-link" href="mundo">
+        <button class="btn btn-primary" @onclick="resetarMundo">Reset Mundo</button>
+    </NavLink>
 </div>
 
+@if (MostrarTabela)
+{
+    <TabelaMundo />
+}
 
 @code {
 
     private int currentCount = 0;
+    private Mundo mundo;
+    private bool MostrarTabela = true; 
 
     protected override async Task OnInitializedAsync()
     {
+        mundo = IMundoServicos.GetMundo();
         currentCount = mundo.EspecieList.Count;
     }
 
-    private void ProxGeracao()
+    public async void resetarMundo()
     {
-        IMundoServicos.AvancaGeracao(mundo);
-        currentCount = mundo.EspecieList.Count;
+        MostrarTabela = false;
+        IMundoServicos.ZeraMundo();
+        mundo = IMundoServicos.GetMundo();
+
+        await Task.Delay(10);
+        MostrarTabela = true;
+        StateHasChanged();
     }
 }

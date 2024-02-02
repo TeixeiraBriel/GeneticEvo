@@ -1,0 +1,68 @@
+﻿@using Dominio.Entidades;
+@using Dominio.Interfaces;
+
+@inject IMundoServicos IMundoServicos;
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Campo</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Geração:</td>
+            <td>@mundo.Geracao</td>
+        </tr>
+        <tr>
+            <td>Especies Existentes:</td>
+            <td>@mundo.EspecieList.Count</td>
+        </tr>
+        <tr>
+            <td>Especies Existiram:</td>
+            <td>@mundo.registroEspecies.DistinctBy(x => x.EspecieOrigem).ToList().Count</td>
+        </tr>
+        <tr>
+            <td>Elemento A Ocupado</td>
+            <td>@mundo.regiaoMundo.Where(y => y.QtdIndividuos > 0).Sum(x => x.Elementos.A)</td>
+        </tr>
+        <tr>
+            <td>Elemento B Ocupado</td>
+            <td>@mundo.regiaoMundo.Where(y => y.QtdIndividuos > 0).Sum(x => x.Elementos.B)</td>
+        </tr>
+        <tr>
+            <td>Elemento C Ocupado</td>
+            <td>@mundo.regiaoMundo.Where(y => y.QtdIndividuos > 0).Sum(x => x.Elementos.C)</td>
+        </tr>
+        <tr>
+            <td>Elemento D Ocupado</td>
+            <td>@mundo.regiaoMundo.Where(y => y.QtdIndividuos > 0).Sum(x => x.Elementos.D)</td>
+        </tr>
+        <tr>
+            <td>Elemento A</td>
+            <td>@mundo.regiaoMundo.Sum(x => x.Elementos.A)</td>
+        </tr>
+        <tr>
+            <td>Elemento B</td>
+            <td>@mundo.regiaoMundo.Sum(x => x.Elementos.B)</td>
+        </tr>
+        <tr>
+            <td>Elemento C</td>
+            <td>@mundo.regiaoMundo.Sum(x => x.Elementos.C)</td>
+        </tr>
+        <tr>
+            <td>Elemento D</td>
+            <td>@mundo.regiaoMundo.Sum(x => x.Elementos.D)</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    private Mundo mundo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        mundo = IMundoServicos.GetMundo();
+    }
+}

@@ -9,6 +9,7 @@
             Geracao = 1;
             registroEspecies = new List<RegistroEspecie>();
             regiaoMundo = CriarMapeamentoMundo(5,5,10);
+            AcoesFimGeracao = new List<Action>();
         }
 
         public string Nome { get; set; }
@@ -17,6 +18,8 @@
         public List<RegistroEspecie> registroEspecies { get; set; }
 
         public List<regiaoMundo> regiaoMundo { get; set;}
+
+        public List<Action> AcoesFimGeracao { get; set; }//TODA AÇÃO DE CONSUMO NO MUNDO DEVE SER APLICADO NA HORA, TODA AÇÂO DE REAÇÃO NO MUNDO DEVE SER APLICADA NO FIM DO TURNO
 
         List<regiaoMundo> CriarMapeamentoMundo(int tamanhoX, int tamanhoY, int tamanhoZ, double QtdElementoA = 10, double QtdElementoB = 10, double QtdElementoC = 10, double QtdElementoD = 10)
         {
