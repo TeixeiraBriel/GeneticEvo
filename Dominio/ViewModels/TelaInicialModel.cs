@@ -1,11 +1,4 @@
-﻿using GeneticEvo.Entidades.Caracteristicas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GeneticEvoBlazor.Model
+﻿namespace Dominio.ViewModels
 {
     public class TelaInicialModel
     {
