@@ -87,6 +87,8 @@ namespace Infraestrutura.Servicos
             {
                 foreach (var caracteristica in individuoBase.Caracteristicas)
                 {
+                    //TODO: TESTE
+                    //double peso = 0;
                     double peso = new Random().NextDouble();
                     lista.Add(new QTableBaseOption() { Caracteristica = caracteristica.Nome, Peso = peso });
                     _QTableComplexa.VidaOpcoes.Add(new NeuronioVida() { Caracteristica = caracteristica.Nome, Peso = peso, Vida = individuoBase.Vida });
@@ -107,6 +109,8 @@ namespace Infraestrutura.Servicos
             {
                 foreach (var caracteristica in individuoBase.Caracteristicas)
                 {
+                    //TODO: TESTE
+                    //double peso = 0;
                     double peso = new Random().NextDouble();
                     lista.Add(new QTableBaseOption() { Caracteristica = caracteristica.Nome, Peso = peso });
                     _QTableComplexa.EnergiaOpcoes.Add(new NeuronioEnergia() { Caracteristica = caracteristica.Nome, Peso = peso, Energia = individuoBase.Energia });
@@ -127,6 +131,8 @@ namespace Infraestrutura.Servicos
             {
                 foreach (var caracteristica in individuoBase.Caracteristicas)
                 {
+                    //TODO: TESTE
+                    //double peso = 0;
                     double peso = new Random().NextDouble();
                     lista.Add(new QTableBaseOption() { Caracteristica = caracteristica.Nome, Peso = peso });
                     _QTableComplexa.DecendentesOpcoes.Add(new NeuronioDecendentes() { Caracteristica = caracteristica.Nome, Peso = peso, Decendentes = individuoBase.Decendentes });
@@ -147,6 +153,8 @@ namespace Infraestrutura.Servicos
             {
                 foreach (var caracteristica in individuoBase.Caracteristicas)
                 {
+                    //TODO: TESTE
+                    //double peso = 0;
                     double peso = new Random().NextDouble();
                     lista.Add(new QTableBaseOption() { Caracteristica = caracteristica.Nome, Peso = peso });
                     _QTableComplexa.LocalizacaoOpcoes.Add(new NeuronioLocalizacao() { Caracteristica = caracteristica.Nome, Peso = peso, Localizacao = individuoBase.posNoMundo });
@@ -161,7 +169,7 @@ namespace Infraestrutura.Servicos
             EnumCaracteristicas bestAction = individuoBase.Caracteristicas.FirstOrDefault().Nome;
 
             var chanceExploracao = new Random().NextDouble();
-            if (chanceExploracao < individuoBase.taxaExploraca)
+            if (chanceExploracao < individuoBase.taxaExploraca || _QTableComplexa.Opcoes.All(x => x.Peso == 0))
             {
                 var Acoes = individuoBase.Caracteristicas.FindAll(x => x.Executar).ToList();
                 int NumSorteado = new Random().Next(Acoes.Count);
@@ -202,7 +210,7 @@ namespace Infraestrutura.Servicos
                                 individuo.Energia > individuoBase.Energia ? 0.5 : 0;
 
             var DecendentesSomados = individuo.Decendentes - individuoBase.Decendentes;
-            double RecompensaDecendentes = DecendentesSomados > 0 ? 0.2 * DecendentesSomados : 0;
+            double RecompensaDecendentes = DecendentesSomados > 0 ? 0.5 * DecendentesSomados : 0;
             
             //TODO: pensar em como recompesar por localização
             double RecompensaLocalizacao = 0;

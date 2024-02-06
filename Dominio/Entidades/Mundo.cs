@@ -23,11 +23,10 @@
 
         List<regiaoMundo> CriarMapeamentoMundo(int tamanhoX, int tamanhoY, int tamanhoZ, double QtdElementoA = 10, double QtdElementoB = 10, double QtdElementoC = 10, double QtdElementoD = 10)
         {
-            Elementos elementos = new Elementos() { A = QtdElementoA, B = QtdElementoB, C = QtdElementoC, D = QtdElementoD, };
             return Enumerable.Range(0, tamanhoX)
                 .SelectMany(x => Enumerable.Range(0, tamanhoY)
                     .SelectMany(y => Enumerable.Range(0, tamanhoZ)
-                        .Select(z => new regiaoMundo { EixoX = x, EixoY = y, EixoZ = z , Elementos = elementos, QtdIndividuos = 0 })))
+                        .Select(z => new regiaoMundo { EixoX = x, EixoY = y, EixoZ = z , Elementos = new Elementos() { A = QtdElementoA, B = QtdElementoB, C = QtdElementoC, D = QtdElementoD, }, QtdIndividuos = 0 })))
                 .ToList();
         }
     }

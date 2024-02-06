@@ -55,6 +55,7 @@ namespace Infraestrutura.Servicos
             filhote.Filiacao = individuo.Nome;
             filhote.Vida = filhote.VidaMaxima;
             filhote.Energia = filhote.EnergiaMaxima;
+            filhote.Decendentes = 0;
             List<QLerningOpcao> QtableFilhote = new List<QLerningOpcao>();
             foreach (var opcao in individuo.QTable)
             {

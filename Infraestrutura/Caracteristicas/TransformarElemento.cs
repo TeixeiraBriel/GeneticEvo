@@ -44,7 +44,7 @@ namespace Infraestrutura.Caracteristicas
                             Valores[1] == 2 ? elementos.C :
                                               elementos.D;
 
-            ElementoReservaSuficiente = ElementoBase - Valores[2] > 0;
+            ElementoReservaSuficiente = ElementoBase - Valores[2] >= 0;
 
             if (ElementoReservaSuficiente)
             {
