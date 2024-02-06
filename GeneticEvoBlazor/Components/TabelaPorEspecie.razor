@@ -1,4 +1,46 @@
-﻿@using Dominio.Entidades;
+﻿@using BlazorStrap.V5
+@using Dominio.Entidades
+@using BlazorStrap
+
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" @onclick="(() => TrocarPagina(1, Page))" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" @onclick="(() => Paginacao(0))" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @foreach (int pageAtual in paginas)
+            {
+                int valLocal = pageAtual;
+                if (valLocal == Page)
+                {
+                    <li class="page-item active"><a class="page-link" @onclick="(() => TrocarPagina(valLocal, Page))">@pageAtual</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" @onclick="(() => TrocarPagina(valLocal, Page))">@pageAtual</a></li>
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" @onclick="(() => Paginacao(1))" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" @onclick="(() => TrocarPagina(QtdPages, Page))" aria-label="Next">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -7,20 +49,20 @@
             <th>N° Caracteristicas</th>
             <th>Vida</th>
             <th>Energia</th>
-            <th>Decendentes</th>
+            <th onclick="@OdernarDescentes">Decendentes</th>
             <th>Tempo de vida</th>
             <th>Filiação</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var individuo in EspecieList)
+        @foreach (var individuo in PagedEspecieList)
         {
             <tr>
                 <td>@individuo.Nome</td>
                 <td>@individuo.DataOrigem</td>
                 <td>@individuo.Caracteristicas.Count</td>
-                <td>@individuo.Vida/@individuo.VidaMaxima</td>
-                <td>@individuo.Energia/@individuo.EnergiaMaxima</td>
+                <td>@individuo.Vida / @individuo.VidaMaxima</td>
+                <td>@individuo.Energia / @individuo.EnergiaMaxima</td>
                 <td>@individuo.Decendentes</td>
                 <td>@individuo.TempoVida</td>
                 <td>@individuo.Filiacao</td>
@@ -32,4 +74,86 @@
 @code {
     [Parameter]
     public List<Individuo> EspecieList { get; set; }
+
+    private int QtdPages = 1;
+    private List<int> paginas;
+    private int Page { get; set; } = 1;
+    private string OrderBy = "Default";
+
+    protected override async Task OnInitializedAsync()
+    {
+        QtdPages = EspecieList.Count / 10;
+        QtdPages += EspecieList.Count % 10 > 0 ? 1 : 0;
+        paginas = new List<int>();
+        for (int i = 1; i <= QtdPages && i < 8; i++)
+        {
+            paginas.Add(i);
+        }
+    }
+
+    private List<Individuo> PagedEspecieList => EspecieList.Skip((Page - 1) * 10).Take(10).ToList();
+
+    private void Paginacao(int acao)
+    {
+        var paginaTentativa = Page;
+        List<Individuo> casos = null;
+        switch (acao)
+        {
+            case 0:
+                paginaTentativa -= 1;
+                casos = EspecieList.Skip((paginaTentativa - 1) * 10).Take(10).ToList();
+                TrocarPagina(casos.Count > 0 ? paginaTentativa : Page, Page);
+                break;
+            case 1:
+                paginaTentativa += 1;
+                casos = EspecieList.Skip((paginaTentativa - 1) * 10).Take(10).ToList();
+                TrocarPagina(casos.Count > 0 ? paginaTentativa : Page, Page);
+                break;
+        }
+    }
+
+    private void TrocarPagina(int pageAtual, int PageAntiga)
+    {
+        if (pageAtual > 4)
+        {
+            paginas.Clear();
+            int range = QtdPages - pageAtual;
+            int rangeMin = 3 + (range - 3 > 0 ? 0 : (range - 3) * -1);
+
+            for (int i = pageAtual - rangeMin; i < pageAtual; i++)
+            {
+                paginas.Add(i);
+            }
+            paginas.Add(pageAtual);
+            for (int i = pageAtual + 1; i <= pageAtual + 3; i++)
+            {
+                if (i <= QtdPages)
+                    paginas.Add(i);
+            }
+        }
+        else
+        {
+            paginas.Clear();
+            for (int i = 1; i <= QtdPages && i < 8; i++)
+            {
+                paginas.Add(i);
+            }
+        }
+
+        Page = pageAtual;
+    }
+
+    private void OdernarDescentes()
+    {
+        if (OrderBy != "DecendentesASC")
+        {
+            EspecieList = EspecieList.OrderBy(x => x.Decendentes).ToList();
+            OrderBy = "DecendentesASC";
+        }
+        else
+        {
+            EspecieList = EspecieList.OrderByDescending(x => x.Decendentes).ToList();
+            OrderBy = "DecendentesDESC";
+        }
+    }
 }

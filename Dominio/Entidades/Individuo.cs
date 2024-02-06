@@ -25,6 +25,7 @@ namespace Dominio.Entidades
         public Elementos ComposicaoOrganica { get; set; }
         public Elementos ToleranciaOrganica { get; set; }
         public List<QLerningOpcao> QTable { get; set; }
+        public QTableComplexa QTableComplexa { get; set; }
         public double taxaExploraca { get; set; }
         public double learningRate { get; set; }
         public double discountFactor { get; set; }
@@ -35,6 +36,7 @@ namespace Dominio.Entidades
             Vivo = true;
             Caracteristicas = new List<Caracteristica>();
             QTable = new List<QLerningOpcao>();
+            QTableComplexa = new QTableComplexa();
             taxaExploraca = 0.2;
             learningRate = 0.1;
             discountFactor = 0.7;

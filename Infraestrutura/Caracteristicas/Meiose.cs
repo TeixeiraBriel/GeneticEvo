@@ -48,6 +48,10 @@ namespace GeneticEvo.Entidades.Caracteristicas
                     individuo.Decendentes++;
                 }
             }
+            else
+            {
+                individuo.Energia = individuo.Energia-- > 0 ? individuo.Energia-- : 0;
+            }
             return mundo;
         }
 
